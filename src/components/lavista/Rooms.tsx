@@ -38,14 +38,9 @@ export function Rooms({ trigger }: { trigger: number }) {
   const rooms =
     trigger > 0
       ? availabilityReady
-        ? all.filter(
-            (r) =>
-              r.capacity >= guests &&
-              !(unavailable?.has(r.id)),
-          )
-        : []  // still fetching — withhold results until we know what's blocked
+        ? all.filter((r) => r.capacity >= guests && !unavailable?.has(r.id))
+        : [] // still fetching — withhold results until we know what's blocked
       : all;
-
 
   useEffect(() => {
     if (!api) return;
@@ -75,8 +70,8 @@ export function Rooms({ trigger }: { trigger: number }) {
         </div>
         <div className="flex items-center gap-4">
           <p className="hidden max-w-sm text-sm text-muted-foreground md:block">
-            Every room is designed around warm light and quiet comfort. No fuss,
-            just a great place to sleep and start again.
+            Every room is designed around warm light and quiet comfort. No fuss, just a great place
+            to sleep and start again.
           </p>
           {showArrows && (
             <div className="flex items-center gap-2 md:hidden">
@@ -105,8 +100,14 @@ export function Rooms({ trigger }: { trigger: number }) {
 
       <AnimatePresence mode="wait">
         {isLoading ? (
-          <motion.div key="loading" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} className="grid gap-6 md:grid-cols-3">
-            {[0,1,2].map(i => (
+          <motion.div
+            key="loading"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="grid gap-6 md:grid-cols-3"
+          >
+            {[0, 1, 2].map((i) => (
               <div key={i} className="h-[420px] animate-pulse rounded-3xl bg-card/60" />
             ))}
           </motion.div>
@@ -115,7 +116,12 @@ export function Rooms({ trigger }: { trigger: number }) {
             No rooms match — try fewer guests or contact us.
           </p>
         ) : (
-          <motion.div key="rooms" initial={{opacity:0}} animate={{opacity:1}} className="relative">
+          <motion.div
+            key="rooms"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="relative"
+          >
             <Carousel
               setApi={setApi}
               opts={{ align: "start", containScroll: "trimSnaps" }}
@@ -123,10 +129,7 @@ export function Rooms({ trigger }: { trigger: number }) {
             >
               <CarouselContent className="-ml-6">
                 {rooms.map((room, i) => (
-                  <CarouselItem
-                    key={room.id}
-                    className="pl-6 sm:basis-1/2 lg:basis-1/3"
-                  >
+                  <CarouselItem key={room.id} className="pl-6 sm:basis-1/2 lg:basis-1/3">
                     <motion.article
                       initial={{ opacity: 0, y: 24 }}
                       whileInView={{ opacity: 1, y: 0 }}
@@ -135,7 +138,12 @@ export function Rooms({ trigger }: { trigger: number }) {
                       className="group flex h-full flex-col overflow-hidden rounded-3xl border border-gold/10 bg-card transition hover:border-gold/30 hover:shadow-2xl hover:shadow-black/40"
                     >
                       <div className="relative aspect-[4/3] overflow-hidden">
-                        <img src={room.img} alt={room.type} className="h-full w-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" />
+                        <img
+                          src={room.img}
+                          alt={room.type}
+                          className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
+                          loading="lazy"
+                        />
                         <div className="absolute right-4 top-4 rounded-full bg-ink/70 px-3 py-1 text-xs text-gold backdrop-blur">
                           ${room.price}/night
                         </div>
@@ -150,14 +158,27 @@ export function Rooms({ trigger }: { trigger: number }) {
                         <p className="mt-2 text-sm text-muted-foreground">{room.desc}</p>
                         <div className="mt-4 flex flex-wrap gap-2">
                           {room.features.slice(0, CARD_FEATURE_LIMIT).map((f) => (
-                            <span key={f} className="rounded-full border border-gold/20 px-2.5 py-1 text-[11px] text-sand-soft/80">{f}</span>
+                            <span
+                              key={f}
+                              className="rounded-full border border-gold/20 px-2.5 py-1 text-[11px] text-sand-soft/80"
+                            >
+                              {f}
+                            </span>
                           ))}
                           {room.features.length > CARD_FEATURE_LIMIT && (
-                            <span className="rounded-full border border-gold/20 px-2.5 py-1 text-[11px] text-sand-soft/60">…</span>
+                            <span className="rounded-full border border-gold/20 px-2.5 py-1 text-[11px] text-sand-soft/60">
+                              …
+                            </span>
                           )}
                         </div>
                         <div className="mt-auto flex items-center justify-between gap-3 pt-6">
-                          <Link to="/rooms/$id" params={{ id: room.id }} className="text-sm text-sand-soft/80 transition hover:text-gold">View details</Link>
+                          <Link
+                            to="/rooms/$id"
+                            params={{ id: room.id }}
+                            className="text-sm text-sand-soft/80 transition hover:text-gold"
+                          >
+                            View details
+                          </Link>
                           <Link
                             to="/booking/guest"
                             onClick={() => {

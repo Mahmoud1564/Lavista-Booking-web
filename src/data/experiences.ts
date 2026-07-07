@@ -89,5 +89,4 @@ export const EXPERIENCES: Experience[] = [
   },
 ];
 
-export const getExperience = (slug: string) =>
-  EXPERIENCES.find((e) => e.slug === slug);
+export const getExperience = (slug: string) => EXPERIENCES.find((e) => e.slug === slug);

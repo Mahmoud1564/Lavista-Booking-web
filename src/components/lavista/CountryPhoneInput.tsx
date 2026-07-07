@@ -4,9 +4,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { COUNTRIES, type Country } from "@/data/countries";
 
 export const flagEmoji = (code: string) =>
-  code
-    .toUpperCase()
-    .replace(/./g, (c) => String.fromCodePoint(127397 + c.charCodeAt(0)));
+  code.toUpperCase().replace(/./g, (c) => String.fromCodePoint(127397 + c.charCodeAt(0)));
 
 type Props = {
   country: string; // ISO code, e.g. "EG"
@@ -29,17 +27,14 @@ export function CountryPhoneInput({
   const [q, setQ] = useState("");
 
   const current: Country =
-    COUNTRIES.find((c) => c.code === country) ??
-    COUNTRIES.find((c) => c.code === "EG")!;
+    COUNTRIES.find((c) => c.code === country) ?? COUNTRIES.find((c) => c.code === "EG")!;
 
   const filtered = useMemo(() => {
     const s = q.trim().toLowerCase();
     if (!s) return COUNTRIES;
     return COUNTRIES.filter(
       (c) =>
-        c.name.toLowerCase().includes(s) ||
-        c.dial.includes(s) ||
-        c.code.toLowerCase().includes(s),
+        c.name.toLowerCase().includes(s) || c.dial.includes(s) || c.code.toLowerCase().includes(s),
     );
   }, [q]);
 
@@ -57,17 +52,12 @@ export function CountryPhoneInput({
               className="inline-flex shrink-0 items-center gap-1.5 rounded-xl border border-gold/20 bg-ink/30 px-3 py-3 text-sm text-sand-soft transition hover:border-gold/40"
               aria-label="Select country"
             >
-              <span className="text-base leading-none">
-                {flagEmoji(current.code)}
-              </span>
+              <span className="text-base leading-none">{flagEmoji(current.code)}</span>
               <span className="tabular-nums">{current.dial}</span>
               <ChevronDown className="h-3.5 w-3.5 opacity-70" />
             </button>
           </PopoverTrigger>
-          <PopoverContent
-            align="start"
-            className="w-72 border-gold/20 bg-card p-0"
-          >
+          <PopoverContent align="start" className="w-72 border-gold/20 bg-card p-0">
             <div className="flex items-center gap-2 border-b border-gold/10 px-3 py-2">
               <Search className="h-3.5 w-3.5 text-muted-foreground" />
               <input
@@ -90,23 +80,15 @@ export function CountryPhoneInput({
                     }}
                     className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm text-sand-soft transition hover:bg-gold/10"
                   >
-                    <span className="text-base leading-none">
-                      {flagEmoji(c.code)}
-                    </span>
+                    <span className="text-base leading-none">{flagEmoji(c.code)}</span>
                     <span className="flex-1 truncate">{c.name}</span>
-                    <span className="text-xs text-muted-foreground tabular-nums">
-                      {c.dial}
-                    </span>
-                    {c.code === current.code && (
-                      <Check className="h-3.5 w-3.5 text-gold" />
-                    )}
+                    <span className="text-xs text-muted-foreground tabular-nums">{c.dial}</span>
+                    {c.code === current.code && <Check className="h-3.5 w-3.5 text-gold" />}
                   </button>
                 </li>
               ))}
               {filtered.length === 0 && (
-                <li className="px-3 py-4 text-center text-xs text-muted-foreground">
-                  No matches
-                </li>
+                <li className="px-3 py-4 text-center text-xs text-muted-foreground">No matches</li>
               )}
             </ul>
           </PopoverContent>

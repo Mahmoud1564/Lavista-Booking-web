@@ -64,12 +64,48 @@ export function Navbar() {
         </a>
         <div className="pointer-events-none absolute inset-x-0 top-1/2 hidden -translate-y-1/2 items-center justify-center md:flex">
           <div className="pointer-events-auto flex items-center gap-6 text-xs text-sand-soft/80 lg:gap-8 lg:text-sm">
-            <a href="/#stay" onClick={(e) => handleNavLink(e, "stay")} className="transition hover:text-gold">Stay</a>
-            <a href="/#experiences" onClick={(e) => handleNavLink(e, "experiences")} className="transition hover:text-gold">Experiences</a>
-            <a href="/#about" onClick={(e) => handleNavLink(e, "about")} className="transition hover:text-gold">About</a>
-            <a href="/#location" onClick={(e) => handleNavLink(e, "location")} className="transition hover:text-gold">Location</a>
-            <a href="/#faq" onClick={(e) => handleNavLink(e, "faq")} className="transition hover:text-gold">FAQ</a>
-            <a href="/#contact" onClick={(e) => handleNavLink(e, "contact")} className="transition hover:text-gold">Contact</a>
+            <a
+              href="/#stay"
+              onClick={(e) => handleNavLink(e, "stay")}
+              className="transition hover:text-gold"
+            >
+              Stay
+            </a>
+            <a
+              href="/#experiences"
+              onClick={(e) => handleNavLink(e, "experiences")}
+              className="transition hover:text-gold"
+            >
+              Experiences
+            </a>
+            <a
+              href="/#about"
+              onClick={(e) => handleNavLink(e, "about")}
+              className="transition hover:text-gold"
+            >
+              About
+            </a>
+            <a
+              href="/#location"
+              onClick={(e) => handleNavLink(e, "location")}
+              className="transition hover:text-gold"
+            >
+              Location
+            </a>
+            <a
+              href="/#faq"
+              onClick={(e) => handleNavLink(e, "faq")}
+              className="transition hover:text-gold"
+            >
+              FAQ
+            </a>
+            <a
+              href="/#contact"
+              onClick={(e) => handleNavLink(e, "contact")}
+              className="transition hover:text-gold"
+            >
+              Contact
+            </a>
           </div>
         </div>
         <Link

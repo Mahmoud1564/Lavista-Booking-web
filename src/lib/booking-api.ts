@@ -40,13 +40,12 @@ function roomImg(ref: string | null): string {
 
 export function mapRoom(r: DbRoom, gallery: string[] = []): UiRoom {
   const thumb = roomImg(r.thumbnail_url);
-  const slug = r.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  const slug = r.name
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
   const gal = gallery.length > 0 ? gallery : [thumb];
-  const features = [
-    r.beds > 1 ? `${r.beds} beds` : "1 bed",
-    `Sleeps ${r.guests}`,
-    "Fast Wi-Fi",
-  ];
+  const features = [r.beds > 1 ? `${r.beds} beds` : "1 bed", `Sleeps ${r.guests}`, "Fast Wi-Fi"];
   return {
     id: r.id,
     slug,
@@ -60,8 +59,7 @@ export function mapRoom(r: DbRoom, gallery: string[] = []): UiRoom {
     long: r.description ?? "",
     features,
     amenities: [],
-    availability:
-      "Live availability — selection is verified against current bookings.",
+    availability: "Live availability — selection is verified against current bookings.",
   };
 }
 
@@ -105,14 +103,10 @@ export async function fetchRoom(id: string): Promise<UiRoom | null> {
     .maybeSingle();
   if (error) throw error;
   if (!data) return null;
-  const [gallery, amenities] = await Promise.all([
-    fetchRoomGallery(id),
-    fetchRoomAmenities(id),
-  ]);
+  const [gallery, amenities] = await Promise.all([fetchRoomGallery(id), fetchRoomAmenities(id)]);
   const room = mapRoom(data as DbRoom, gallery);
   return { ...room, amenities };
 }
-
 
 /**
  * Returns the set of room IDs that are unavailable for the given date range.
@@ -135,10 +129,7 @@ export async function fetchRoom(id: string): Promise<UiRoom | null> {
  * running — this ensures admin blocks always work even when the bookings
  * table is inaccessible, and vice-versa.
  */
-export async function fetchUnavailableRoomIds(
-  checkIn: Date,
-  checkOut: Date,
-): Promise<Set<string>> {
+export async function fetchUnavailableRoomIds(checkIn: Date, checkOut: Date): Promise<Set<string>> {
   const ci = toDateKey(checkIn);
   const co = toDateKey(checkOut);
 
@@ -240,9 +231,7 @@ export async function createGuest(input: CreateGuestInput): Promise<string> {
   };
   // eslint-disable-next-line no-console
   console.log("[createGuest] inserting", payload);
-  const response = await supabase
-    .from("guests")
-    .insert(payload);
+  const response = await supabase.from("guests").insert(payload);
   const { error, status, statusText } = response;
   // eslint-disable-next-line no-console
   console.log("[createGuest] response", { status, statusText, error });
@@ -256,7 +245,6 @@ export async function createGuest(input: CreateGuestInput): Promise<string> {
   }
   return id;
 }
-
 
 export type CreateBookingInput = {
   guestId: string;
@@ -295,9 +283,7 @@ export async function createBooking(input: CreateBookingInput): Promise<string> 
   // eslint-disable-next-line no-console
   console.log("[createBooking] guest_id:", input.guestId, "payload:", payload);
 
-  const response = await supabase
-    .from("bookings")
-    .insert(payload);
+  const response = await supabase.from("bookings").insert(payload);
   const { error, status, statusText } = response;
   // eslint-disable-next-line no-console
   console.log("[createBooking] response", { status, statusText, error });
@@ -352,7 +338,12 @@ export type FullBooking = {
   notes: string | null;
   created_at: string;
   guest: { name: string; phone: string; email: string | null } | null;
-  rooms: Array<{ room_id: string; price_per_night: number | null; name: string; thumbnail_url: string | null }>;
+  rooms: Array<{
+    room_id: string;
+    price_per_night: number | null;
+    name: string;
+    thumbnail_url: string | null;
+  }>;
 };
 
 export async function fetchBookingById(id: string): Promise<FullBooking | null> {
@@ -454,14 +445,16 @@ export async function findBookingByGuest(
   const { data: bookings } = await supabase
     .from("bookings")
     .select("id,created_at,guest_id")
-    .in("guest_id", candidates.map((g: { id: string }) => g.id))
+    .in(
+      "guest_id",
+      candidates.map((g: { id: string }) => g.id),
+    )
     .order("created_at", { ascending: false })
     .limit(1);
   const row = (bookings ?? [])[0] as { id: string } | undefined;
   if (!row) return null;
   return { ref: row.id, bookingId: row.id };
 }
-
 
 /** Stores ref↔bookingId mapping so the confirmation route can look up by short ref. */
 const REF_KEY = "lavista.bookingRefs";
@@ -523,7 +516,10 @@ export type UiExperience = {
 };
 
 function expSlug(title: string) {
-  return title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  return title
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
 }
 
 async function fetchExperienceGallery(id: string): Promise<string[]> {
@@ -545,7 +541,9 @@ export async function fetchExperiences(): Promise<UiExperience[]> {
     .order("created_at", { ascending: true });
   if (error) throw error;
   const rows = (data ?? []) as DbExperience[];
-  const galleries = await Promise.all(rows.map((r) => fetchExperienceGallery(r.id).catch(() => [])));
+  const galleries = await Promise.all(
+    rows.map((r) => fetchExperienceGallery(r.id).catch(() => [])),
+  );
   return rows.map((e, i) => {
     const img = publicUrl("experience-images", e.thumbnail_url) ?? galleries[i][0] ?? "";
     const gallery = galleries[i].length > 0 ? galleries[i] : img ? [img] : [];
@@ -564,7 +562,6 @@ export async function fetchExperiences(): Promise<UiExperience[]> {
     };
   });
 }
-
 
 export type DbFaq = { id: string; question: string; answer: string; sort_order: number | null };
 
@@ -603,9 +600,7 @@ export async function fetchReviews() {
 }
 
 export async function fetchWebsiteContent(): Promise<Record<string, string>> {
-  const { data, error } = await supabase
-    .from("website_content")
-    .select("key,value");
+  const { data, error } = await supabase.from("website_content").select("key,value");
   if (error) return {};
   const map: Record<string, string> = {};
   for (const row of (data ?? []) as Array<{ key: string; value: string }>) {

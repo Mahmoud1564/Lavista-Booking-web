@@ -16,13 +16,25 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Lavista — Warm modern stay near the Pyramids of Giza" },
-      { name: "description", content: "A stylish, affordable hostel & hotel a short walk from the pyramids. Cozy rooms, rooftop sunsets, local experiences and modern Egyptian hospitality." },
+      {
+        name: "description",
+        content:
+          "A stylish, affordable hostel & hotel a short walk from the pyramids. Cozy rooms, rooftop sunsets, local experiences and modern Egyptian hospitality.",
+      },
       { property: "og:title", content: "Lavista — Warm modern stay near the Pyramids" },
-      { property: "og:description", content: "Cozy rooms, rooftop sunsets, and local experiences a short walk from the Pyramids of Giza." },
+      {
+        property: "og:description",
+        content:
+          "Cozy rooms, rooftop sunsets, and local experiences a short walk from the Pyramids of Giza.",
+      },
       { property: "og:url", content: "https://lavista-pyramids.lovable.app/" },
       { property: "og:type", content: "website" },
       { property: "og:locale", content: "en_US" },
-      { name: "keywords", content: "Lavista, hotel near Giza pyramids, hostel Giza, hotel Pyramids of Giza, Egypt boutique hotel, affordable stay Giza, where to stay near the pyramids" },
+      {
+        name: "keywords",
+        content:
+          "Lavista, hotel near Giza pyramids, hostel Giza, hotel Pyramids of Giza, Egypt boutique hotel, affordable stay Giza, where to stay near the pyramids",
+      },
       { name: "robots", content: "index,follow,max-image-preview:large" },
       { name: "geo.region", content: "EG-GZ" },
       { name: "geo.placename", content: "Giza" },
@@ -30,11 +42,13 @@ export const Route = createFileRoute("/")({
       { name: "ICBM", content: "29.9773, 31.1325" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "Lavista — Warm modern stay near the Pyramids" },
-      { name: "twitter:description", content: "Cozy rooms, rooftop sunsets, and local experiences a short walk from the Pyramids of Giza." },
+      {
+        name: "twitter:description",
+        content:
+          "Cozy rooms, rooftop sunsets, and local experiences a short walk from the Pyramids of Giza.",
+      },
     ],
-    links: [
-      { rel: "canonical", href: "https://lavista-pyramids.lovable.app/" },
-    ],
+    links: [{ rel: "canonical", href: "https://lavista-pyramids.lovable.app/" }],
     scripts: [
       {
         type: "application/ld+json",
@@ -43,7 +57,8 @@ export const Route = createFileRoute("/")({
           "@type": ["Hotel", "LodgingBusiness"],
           "@id": "https://lavista-pyramids.lovable.app/#hotel",
           name: "Lavista",
-          description: "Warm, modern hostel and boutique hotel a short walk from the Pyramids of Giza.",
+          description:
+            "Warm, modern hostel and boutique hotel a short walk from the Pyramids of Giza.",
           url: "https://lavista-pyramids.lovable.app/",
           image: "https://lavista-pyramids.lovable.app/og-cover.jpg",
           telephone: "+20-100-769-5392",

@@ -9,7 +9,9 @@ import { StepCard, StepNav } from "@/components/lavista/booking-flow-ui";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/booking/dates")({
-  head: () => ({ meta: [{ title: "Pick dates — Lavista" }, { name: "robots", content: "noindex,follow" }] }),
+  head: () => ({
+    meta: [{ title: "Pick dates — Lavista" }, { name: "robots", content: "noindex,follow" }],
+  }),
   component: DatesStep,
 });
 
@@ -30,7 +32,10 @@ function DatesStep() {
 
   return (
     <div>
-      <StepCard title="Dates & guests" subtitle="Pick when you'd like to stay and how many people are coming.">
+      <StepCard
+        title="Dates & guests"
+        subtitle="Pick when you'd like to stay and how many people are coming."
+      >
         <div className="grid gap-4 md:grid-cols-2">
           <Popover open={openIn} onOpenChange={setOpenIn}>
             <PopoverTrigger asChild>
@@ -74,7 +79,10 @@ function DatesStep() {
               <Calendar
                 mode="single"
                 selected={checkOut}
-                onSelect={(d) => { setCheckOut(d); setOpenOut(false); }}
+                onSelect={(d) => {
+                  setCheckOut(d);
+                  setOpenOut(false);
+                }}
                 disabled={{ before: checkIn ? addDays(checkIn, 1) : addDays(new Date(), 1) }}
                 initialFocus
                 className={cn("pointer-events-auto p-3")}
@@ -87,9 +95,21 @@ function DatesStep() {
               <Users className="h-3.5 w-3.5" /> Guests
             </p>
             <div className="mt-3 flex items-center gap-4">
-              <button onClick={() => setGuests(guests - 1)} disabled={guests <= 1} className="h-9 w-9 rounded-full border border-gold/30 text-gold disabled:opacity-40">−</button>
+              <button
+                onClick={() => setGuests(guests - 1)}
+                disabled={guests <= 1}
+                className="h-9 w-9 rounded-full border border-gold/30 text-gold disabled:opacity-40"
+              >
+                −
+              </button>
               <span className="text-lg text-sand-soft">{guests}</span>
-              <button onClick={() => setGuests(guests + 1)} disabled={guests >= 6} className="h-9 w-9 rounded-full border border-gold/30 text-gold disabled:opacity-40">+</button>
+              <button
+                onClick={() => setGuests(guests + 1)}
+                disabled={guests >= 6}
+                className="h-9 w-9 rounded-full border border-gold/30 text-gold disabled:opacity-40"
+              >
+                +
+              </button>
               <span className="ml-auto text-xs text-muted-foreground">Max 6</span>
             </div>
           </div>
@@ -97,7 +117,11 @@ function DatesStep() {
 
         {(!checkIn || !checkOut) && (
           <button
-            onClick={() => { const t = new Date(); setCheckIn(t); setCheckOut(addDays(t, 2)); }}
+            onClick={() => {
+              const t = new Date();
+              setCheckIn(t);
+              setCheckOut(addDays(t, 2));
+            }}
             className="mt-4 inline-flex items-center gap-1.5 text-xs text-gold underline-offset-4 hover:underline"
           >
             <CalendarDays className="h-3.5 w-3.5" /> Quick pick: 2-night stay starting today

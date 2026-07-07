@@ -7,7 +7,9 @@ import { useBooking } from "@/components/lavista/booking-context";
 import { useRooms, useUnavailableRooms } from "@/lib/use-rooms";
 
 export const Route = createFileRoute("/booking/rooms")({
-  head: () => ({ meta: [{ title: "Choose your rooms — Lavista" }, { name: "robots", content: "noindex,follow" }] }),
+  head: () => ({
+    meta: [{ title: "Choose your rooms — Lavista" }, { name: "robots", content: "noindex,follow" }],
+  }),
   component: RoomsStep,
 });
 
@@ -48,13 +50,22 @@ function RoomsStep() {
               Selected ({selected.length})
             </p>
             {selected.map((r, idx) => (
-              <div key={`${r.id}-${idx}`} className="flex items-center gap-3 rounded-xl border border-gold/40 bg-gold/5 p-3">
+              <div
+                key={`${r.id}-${idx}`}
+                className="flex items-center gap-3 rounded-xl border border-gold/40 bg-gold/5 p-3"
+              >
                 <img src={r.img} alt={r.type} className="h-14 w-20 rounded-lg object-cover" />
                 <div className="flex-1 min-w-0">
                   <p className="truncate text-sm text-sand-soft">{r.type}</p>
-                  <p className="text-xs text-muted-foreground">${r.price} / night · sleeps {r.capacity}</p>
+                  <p className="text-xs text-muted-foreground">
+                    ${r.price} / night · sleeps {r.capacity}
+                  </p>
                 </div>
-                <button onClick={() => removeRoom(idx)} aria-label="Remove room" className="rounded-full border border-gold/30 p-1.5 text-muted-foreground transition hover:border-gold hover:text-gold">
+                <button
+                  onClick={() => removeRoom(idx)}
+                  aria-label="Remove room"
+                  className="rounded-full border border-gold/30 p-1.5 text-muted-foreground transition hover:border-gold hover:text-gold"
+                >
                   <X className="h-3.5 w-3.5" />
                 </button>
               </div>
@@ -81,11 +92,15 @@ function RoomsStep() {
                     selectedRoom
                       ? "border-gold bg-gold/5"
                       : unavail
-                      ? "border-gold/10 opacity-60"
-                      : "border-gold/15 hover:border-gold/40"
+                        ? "border-gold/10 opacity-60"
+                        : "border-gold/15 hover:border-gold/40"
                   }`}
                 >
-                  <img src={r.img} alt={r.type} className="h-32 w-full rounded-xl object-cover sm:h-24 sm:w-32" />
+                  <img
+                    src={r.img}
+                    alt={r.type}
+                    className="h-32 w-full rounded-xl object-cover sm:h-24 sm:w-32"
+                  />
                   <div className="flex-1 min-w-0">
                     <div className="flex flex-wrap items-center gap-2">
                       <p className="font-display text-lg text-sand-soft">{r.type}</p>
@@ -114,7 +129,9 @@ function RoomsStep() {
                   <div className="flex items-center justify-between gap-3 sm:flex-col sm:items-end sm:justify-center">
                     <div className="text-right">
                       <p className="font-display text-xl text-gold">${r.price}</p>
-                      <p className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">/ night</p>
+                      <p className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+                        / night
+                      </p>
                     </div>
                     {selectedRoom ? (
                       <button

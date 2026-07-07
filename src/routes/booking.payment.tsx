@@ -18,7 +18,9 @@ import {
 import { useQueryClient } from "@tanstack/react-query";
 
 export const Route = createFileRoute("/booking/payment")({
-  head: () => ({ meta: [{ title: "Payment — Lavista" }, { name: "robots", content: "noindex,follow" }] }),
+  head: () => ({
+    meta: [{ title: "Payment — Lavista" }, { name: "robots", content: "noindex,follow" }],
+  }),
   component: PaymentStep,
 });
 
@@ -106,7 +108,6 @@ function PaymentStep() {
 
       // Booking is created with status "upcoming"; no separate confirm step.
 
-
       // UI-only reference + lookup cache.
       const ref = generateRef();
       storeRef(ref, bookingId);
@@ -172,16 +173,47 @@ function PaymentStep() {
     <div>
       <StepCard title="Payment" subtitle="Choose how you'd like to pay. No charge is taken now.">
         <div className="grid gap-3 md:grid-cols-2">
-          <PayOption kind="property" active={draft.payment === "property"} icon={<Building2 className="h-5 w-5" />} title="Pay at property" sub="Settle the bill on arrival. No prepayment needed." />
-          <PayOption kind="card" active={draft.payment === "card"} icon={<CreditCard className="h-5 w-5" />} title="Credit card" sub="Securely save card details (UI demo, no charge)." />
+          <PayOption
+            kind="property"
+            active={draft.payment === "property"}
+            icon={<Building2 className="h-5 w-5" />}
+            title="Pay at property"
+            sub="Settle the bill on arrival. No prepayment needed."
+          />
+          <PayOption
+            kind="card"
+            active={draft.payment === "card"}
+            icon={<CreditCard className="h-5 w-5" />}
+            title="Credit card"
+            sub="Securely save card details (UI demo, no charge)."
+          />
         </div>
 
         {draft.payment === "card" && (
           <div className="mt-6 grid gap-4 md:grid-cols-2">
-            <CardInput label="Card number" value={card.number} onChange={(v) => setCard({ ...card, number: v })} placeholder="4242 4242 4242 4242" />
-            <CardInput label="Name on card" value={card.name} onChange={(v) => setCard({ ...card, name: v })} />
-            <CardInput label="Expiry (MM/YY)" value={card.exp} onChange={(v) => setCard({ ...card, exp: v })} placeholder="12/27" />
-            <CardInput label="CVC" value={card.cvc} onChange={(v) => setCard({ ...card, cvc: v })} placeholder="123" />
+            <CardInput
+              label="Card number"
+              value={card.number}
+              onChange={(v) => setCard({ ...card, number: v })}
+              placeholder="4242 4242 4242 4242"
+            />
+            <CardInput
+              label="Name on card"
+              value={card.name}
+              onChange={(v) => setCard({ ...card, name: v })}
+            />
+            <CardInput
+              label="Expiry (MM/YY)"
+              value={card.exp}
+              onChange={(v) => setCard({ ...card, exp: v })}
+              placeholder="12/27"
+            />
+            <CardInput
+              label="CVC"
+              value={card.cvc}
+              onChange={(v) => setCard({ ...card, cvc: v })}
+              placeholder="123"
+            />
           </div>
         )}
 
@@ -193,7 +225,8 @@ function PaymentStep() {
         )}
 
         <p className="mt-6 rounded-xl border border-gold/15 bg-ink/30 p-4 text-xs text-muted-foreground">
-          Free cancellation up to 24h before check-in. By confirming, you agree to Lavista's house rules.
+          Free cancellation up to 24h before check-in. By confirming, you agree to Lavista's house
+          rules.
         </p>
       </StepCard>
       <div className="mt-8 flex justify-between">
@@ -210,7 +243,19 @@ function PaymentStep() {
   );
 }
 
-function PayOption({ kind, active, icon, title, sub }: { kind: "property" | "card"; active: boolean; icon: React.ReactNode; title: string; sub: string }) {
+function PayOption({
+  kind,
+  active,
+  icon,
+  title,
+  sub,
+}: {
+  kind: "property" | "card";
+  active: boolean;
+  icon: React.ReactNode;
+  title: string;
+  sub: string;
+}) {
   const { setDraft } = useBookingFlow();
   return (
     <button
@@ -228,7 +273,17 @@ function PayOption({ kind, active, icon, title, sub }: { kind: "property" | "car
   );
 }
 
-function CardInput({ label, value, onChange, placeholder }: { label: string; value: string; onChange: (v: string) => void; placeholder?: string }) {
+function CardInput({
+  label,
+  value,
+  onChange,
+  placeholder,
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  placeholder?: string;
+}) {
   return (
     <div>
       <label className="text-[10px] uppercase tracking-[0.22em] text-gold">{label}</label>

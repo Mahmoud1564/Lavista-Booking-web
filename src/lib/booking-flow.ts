@@ -1,4 +1,11 @@
-import { createContext, useContext, useEffect, useState, type ReactNode, createElement } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  type ReactNode,
+  createElement,
+} from "react";
 
 export type GuestInfo = {
   firstName: string;
@@ -66,8 +73,7 @@ export function BookingFlowProvider({ children }: { children: ReactNode }) {
     window.localStorage.setItem(KEY, JSON.stringify(draft));
   }, [draft, hydrated]);
 
-  const setDraft = (patch: Partial<BookingDraft>) =>
-    setState((d) => ({ ...d, ...patch }));
+  const setDraft = (patch: Partial<BookingDraft>) => setState((d) => ({ ...d, ...patch }));
   const setGuest = (patch: Partial<GuestInfo>) =>
     setState((d) => ({ ...d, guest: { ...d.guest, ...patch } }));
   const addRoom = (id: string) =>

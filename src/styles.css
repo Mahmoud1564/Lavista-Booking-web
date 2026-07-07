@@ -157,7 +157,10 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  h1, h2, h3, h4 {
+  h1,
+  h2,
+  h3,
+  h4 {
     font-family: var(--font-display);
     letter-spacing: -0.02em;
   }
@@ -170,6 +173,7 @@
 }
 
 @utility text-gold-glow {
-  text-shadow: 0 0 32px color-mix(in oklab, var(--gold) 35%, transparent),
-               0 2px 8px rgba(0,0,0,0.55);
+  text-shadow:
+    0 0 32px color-mix(in oklab, var(--gold) 35%, transparent),
+    0 2px 8px rgba(0, 0, 0, 0.55);
 }

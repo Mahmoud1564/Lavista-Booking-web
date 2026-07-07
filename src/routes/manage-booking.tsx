@@ -12,9 +12,15 @@ export const Route = createFileRoute("/manage-booking")({
   head: () => ({
     meta: [
       { title: "Manage your booking — Lavista" },
-      { name: "description", content: "Look up, review, or cancel your Lavista booking near the Pyramids of Giza." },
+      {
+        name: "description",
+        content: "Look up, review, or cancel your Lavista booking near the Pyramids of Giza.",
+      },
       { property: "og:title", content: "Manage your booking — Lavista" },
-      { property: "og:description", content: "Look up your Lavista reservation, review the details or cancel." },
+      {
+        property: "og:description",
+        content: "Look up your Lavista reservation, review the details or cancel.",
+      },
       { property: "og:url", content: "https://lavista-pyramids.lovable.app/manage-booking" },
     ],
     links: [{ rel: "canonical", href: "https://lavista-pyramids.lovable.app/manage-booking" }],
@@ -248,7 +254,10 @@ function Manage() {
         <Link to="/" className="font-display text-xl tracking-tight text-sand-soft">
           Lavista<span className="text-gold">.</span>
         </Link>
-        <Link to="/" className="inline-flex items-center gap-2 text-sm text-sand-soft/80 transition hover:text-gold">
+        <Link
+          to="/"
+          className="inline-flex items-center gap-2 text-sm text-sand-soft/80 transition hover:text-gold"
+        >
           <ArrowLeft className="h-4 w-4" /> Home
         </Link>
       </nav>
@@ -257,7 +266,8 @@ function Manage() {
         <p className="text-xs uppercase tracking-[0.3em] text-gold">Manage booking</p>
         <h1 className="mt-3 font-display text-4xl text-sand-soft md:text-5xl">Look up your stay</h1>
         <p className="mt-3 max-w-xl text-sm text-muted-foreground">
-          Search by your booking ID or by your first and last name to review, download, or cancel your reservation.
+          Search by your booking ID or by your first and last name to review, download, or cancel
+          your reservation.
         </p>
 
         {/* Mode toggle */}
@@ -288,7 +298,9 @@ function Manage() {
         >
           {mode === "id" ? (
             <div>
-              <label className="text-[10px] uppercase tracking-[0.22em] text-gold">Booking ID</label>
+              <label className="text-[10px] uppercase tracking-[0.22em] text-gold">
+                Booking ID
+              </label>
               <input
                 value={bookingId}
                 onChange={(e) => setBookingId(e.target.value)}
@@ -300,7 +312,9 @@ function Manage() {
           ) : (
             <div className="grid gap-3 sm:grid-cols-2">
               <div>
-                <label className="text-[10px] uppercase tracking-[0.22em] text-gold">First name</label>
+                <label className="text-[10px] uppercase tracking-[0.22em] text-gold">
+                  First name
+                </label>
                 <input
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
@@ -310,7 +324,9 @@ function Manage() {
                 />
               </div>
               <div>
-                <label className="text-[10px] uppercase tracking-[0.22em] text-gold">Last name</label>
+                <label className="text-[10px] uppercase tracking-[0.22em] text-gold">
+                  Last name
+                </label>
                 <input
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
@@ -336,7 +352,11 @@ function Manage() {
             disabled={loading}
             className="inline-flex items-center justify-center gap-2 self-end rounded-xl bg-gold px-5 py-3 text-sm font-medium text-ink transition hover:bg-gold-soft disabled:opacity-70"
           >
-            {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Search className="h-4 w-4" />}
+            {loading ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <Search className="h-4 w-4" />
+            )}
             {loading ? "Searching…" : "Find"}
           </button>
         </form>

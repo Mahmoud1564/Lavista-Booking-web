@@ -8,40 +8,50 @@ const FALLBACK_REVIEWS = [
     from: "Berlin",
     text: "Honestly the warmest hostel I've stayed at. The rooftop at sunset is unreal — pyramids glowing in the distance.",
     rating: 5,
-    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=160&h=160&fit=crop&crop=faces",
+    avatar:
+      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=160&h=160&fit=crop&crop=faces",
   },
   {
     name: "Marco & Sofia",
     from: "Milan",
     text: "We came for two nights, stayed five. The staff felt like friends by day two.",
     rating: 5,
-    avatar: "https://images.unsplash.com/photo-1521119989659-a83eee488004?w=160&h=160&fit=crop&crop=faces",
+    avatar:
+      "https://images.unsplash.com/photo-1521119989659-a83eee488004?w=160&h=160&fit=crop&crop=faces",
   },
   {
     name: "Yusuke",
     from: "Tokyo",
     text: "Clean, quiet, beautifully designed. Great Wi-Fi for remote work and a proper coffee in the morning.",
     rating: 5,
-    avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=160&h=160&fit=crop&crop=faces",
+    avatar:
+      "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=160&h=160&fit=crop&crop=faces",
   },
 ];
 
-
 export function Testimonials() {
   const { data: db } = useReviewsContent();
-  const REVIEWS = db && db.length > 0
-    ? db.map((r) => ({ name: r.name, from: r.from ?? "", text: r.text, rating: r.rating ?? 5, avatar: r.avatar || "" }))
-    : FALLBACK_REVIEWS;
+  const REVIEWS =
+    db && db.length > 0
+      ? db.map((r) => ({
+          name: r.name,
+          from: r.from ?? "",
+          text: r.text,
+          rating: r.rating ?? 5,
+          avatar: r.avatar || "",
+        }))
+      : FALLBACK_REVIEWS;
   return (
     <section className="bg-card/40 py-28">
       <div className="mx-auto max-w-7xl px-6">
         <div className="mb-14 text-center">
           <p className="text-xs uppercase tracking-[0.3em] text-gold">Travelers</p>
-          <h2 className="mt-3 font-display text-4xl text-sand-soft md:text-5xl">Loved by people passing through</h2>
+          <h2 className="mt-3 font-display text-4xl text-sand-soft md:text-5xl">
+            Loved by people passing through
+          </h2>
         </div>
         <div className="grid gap-6 md:grid-cols-3">
           {REVIEWS.map((r, i) => (
-
             <motion.div
               key={r.name}
               initial={{ opacity: 0, y: 20 }}

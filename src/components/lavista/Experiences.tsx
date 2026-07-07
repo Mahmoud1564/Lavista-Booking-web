@@ -51,7 +51,9 @@ function ExperienceCard({ e, index }: { e: ExpItem; index: number }) {
       </div>
 
       <div className="relative z-10 mt-auto w-full p-5 md:p-6">
-        <h3 className="font-display text-2xl leading-tight text-sand-soft md:text-3xl">{e.title}</h3>
+        <h3 className="font-display text-2xl leading-tight text-sand-soft md:text-3xl">
+          {e.title}
+        </h3>
         <p className="mt-2 line-clamp-2 max-w-md text-sm leading-relaxed text-sand-soft/75">
           {e.blurb}
         </p>
@@ -70,15 +72,17 @@ function ExperienceCard({ e, index }: { e: ExpItem; index: number }) {
 
 export function Experiences() {
   const { data: db } = useExperiencesContent();
-  const EXP: ExpItem[] = (db && db.length > 0
-    ? db.map((e) => ({
-        slug: e.slug,
-        img: e.img || EXP_FALLBACK[0]?.img || "",
-        title: e.title,
-        tag: e.tag,
-        blurb: e.blurb,
-      }))
-    : EXP_FALLBACK) as ExpItem[];
+  const EXP: ExpItem[] = (
+    db && db.length > 0
+      ? db.map((e) => ({
+          slug: e.slug,
+          img: e.img || EXP_FALLBACK[0]?.img || "",
+          title: e.title,
+          tag: e.tag,
+          blurb: e.blurb,
+        }))
+      : EXP_FALLBACK
+  ) as ExpItem[];
 
   const count = EXP.length;
 
@@ -91,25 +95,20 @@ export function Experiences() {
       <div className="pointer-events-none absolute -top-40 left-1/2 h-80 w-[60rem] -translate-x-1/2 rounded-full bg-gold/5 blur-3xl" />
 
       <div className="mx-auto max-w-7xl px-6">
-
         {/* ── MOBILE LAYOUT (< lg) ─────────────────────────────────────────
              Pure flex column: text on top, carousel below.
              Hidden on desktop (lg+).
         ──────────────────────────────────────────────────────────────── */}
         <div className="flex flex-col gap-8 lg:hidden">
-
           {/* Text block */}
           <div>
-            <p className="text-[11px] uppercase tracking-[0.32em] text-gold">
-              Experiences & Trips
-            </p>
+            <p className="text-[11px] uppercase tracking-[0.32em] text-gold">Experiences & Trips</p>
             <h2 className="mt-4 font-display text-4xl leading-[1.05] text-sand-soft">
-              Things to do,{" "}
-              <span className="italic text-gold-soft">the local way</span>
+              Things to do, <span className="italic text-gold-soft">the local way</span>
             </h2>
             <p className="mt-4 text-base leading-relaxed text-muted-foreground">
-              Hand-picked trips with friends of the house. Tell us what you're
-              into and we'll tailor every detail.
+              Hand-picked trips with friends of the house. Tell us what you're into and we'll tailor
+              every detail.
             </p>
           </div>
 
@@ -156,7 +155,6 @@ export function Experiences() {
              Hidden on mobile.
         ──────────────────────────────────────────────────────────────── */}
         <div className="hidden lg:block">
-
           {/* Heading row: label/title/desc on left, button aligned to end */}
           <div className="flex items-end justify-between gap-10">
             <div className="max-w-2xl">
@@ -164,12 +162,11 @@ export function Experiences() {
                 Experiences & Trips
               </p>
               <h2 className="mt-4 font-display text-5xl leading-[1.05] text-sand-soft xl:text-6xl">
-                Things to do,{" "}
-                <span className="italic text-gold-soft">the local way</span>
+                Things to do, <span className="italic text-gold-soft">the local way</span>
               </h2>
               <p className="mt-5 max-w-lg text-base leading-relaxed text-muted-foreground">
-                Hand-picked trips with friends of the house. Tell us what you're
-                into and we'll tailor every detail.
+                Hand-picked trips with friends of the house. Tell us what you're into and we'll
+                tailor every detail.
               </p>
             </div>
             <a
@@ -203,9 +200,7 @@ export function Experiences() {
               </Carousel>
             )}
           </div>
-
         </div>
-
       </div>
     </section>
   );

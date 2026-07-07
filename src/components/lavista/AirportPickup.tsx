@@ -1,7 +1,10 @@
 import { Plane, MessageCircle } from "lucide-react";
 
-const WA_PICKUP = "https://wa.me/201007695392?text=" +
-  encodeURIComponent("Hi Lavista — I'd like to arrange an airport pickup. Here are my flight details:");
+const WA_PICKUP =
+  "https://wa.me/201007695392?text=" +
+  encodeURIComponent(
+    "Hi Lavista — I'd like to arrange an airport pickup. Here are my flight details:",
+  );
 
 export function AirportPickup() {
   return (
@@ -19,8 +22,8 @@ export function AirportPickup() {
                 Airport pickup, on us to arrange
               </h2>
               <p className="mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground md:text-base">
-                Land tired, skip the queue. Share your flight details and we'll
-                meet you at Cairo Airport with a fixed, fair price — no haggling.
+                Land tired, skip the queue. Share your flight details and we'll meet you at Cairo
+                Airport with a fixed, fair price — no haggling.
               </p>
             </div>
           </div>

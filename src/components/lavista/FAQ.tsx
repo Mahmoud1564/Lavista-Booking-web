@@ -1,6 +1,10 @@
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { useFaqContent } from "@/lib/use-content";
-
 
 const FAQS = [
   {
@@ -45,13 +49,13 @@ export function FAQ() {
           Good questions, honest answers
         </h2>
         <p className="mx-auto mt-4 max-w-xl text-sm text-muted-foreground">
-          Everything travelers ask before they book — about the stay, the pyramids, and getting around Giza.
+          Everything travelers ask before they book — about the stay, the pyramids, and getting
+          around Giza.
         </p>
       </div>
 
       <Accordion type="single" collapsible className="w-full">
         {items.map((f, i) => (
-
           <AccordionItem key={i} value={`item-${i}`} className="border-gold/15">
             <AccordionTrigger className="text-left font-display text-lg text-sand-soft hover:text-gold hover:no-underline">
               {f.q}

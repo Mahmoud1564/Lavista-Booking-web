@@ -3,17 +3,29 @@ import { useBookingFlow } from "@/lib/booking-flow";
 import { StepCard, StepNav, FieldLabel } from "@/components/lavista/booking-flow-ui";
 
 export const Route = createFileRoute("/booking/extras")({
-  head: () => ({ meta: [{ title: "Extras — Lavista" }, { name: "robots", content: "noindex,follow" }] }),
+  head: () => ({
+    meta: [{ title: "Extras — Lavista" }, { name: "robots", content: "noindex,follow" }],
+  }),
   component: ExtrasStep,
 });
 
-const TIMES = ["Before 12:00", "12:00–15:00", "15:00–18:00", "18:00–21:00", "After 21:00", "Not sure yet"];
+const TIMES = [
+  "Before 12:00",
+  "12:00–15:00",
+  "15:00–18:00",
+  "18:00–21:00",
+  "After 21:00",
+  "Not sure yet",
+];
 
 function ExtrasStep() {
   const { draft, setDraft } = useBookingFlow();
   return (
     <div>
-      <StepCard title="Optional details" subtitle="Help us get your arrival just right. You can skip this step.">
+      <StepCard
+        title="Optional details"
+        subtitle="Help us get your arrival just right. You can skip this step."
+      >
         <div className="space-y-5">
           <div>
             <FieldLabel>Estimated arrival time</FieldLabel>
