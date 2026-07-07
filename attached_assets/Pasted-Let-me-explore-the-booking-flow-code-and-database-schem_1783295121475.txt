@@ -1,0 +1,77 @@
+Let me explore the booking flow code and database schema in parallel.
+
+Now I need to inspect the actual RLS policies on the Supabase database. Let me read the supabase directory and also try to query the DB.
+
+The anon insert test returned empty output — I need to check HTTP status codes and test all three write tables. Let me run comprehensive tests.
+
+Found it — 42501 on guests: anon inserts are blocked by RLS. Let me test bookings/booking_rooms too and find a way to apply the fix to the Supabase database.
+
+All three tables block anon INSERT. Let me check supabase config and look for credentials to execute SQL against the database.
+
+No service key available. Let me check the .lovable directory and try the Supabase Management API approach, while also checking if I can install Supabase CLI.
+
+The fix requires DDL access to modify RLS policies. I don't have the service role key. Let me request it, and simultaneously write the correct migration SQL so it's ready to apply immediately.
+
+The complete picture is clear now. All three write tables block anon INSERT. I also need to verify SELECT policies work for the confirmation page. I need a privileged credential to execute DDL (create policies). Let me write the migration SQL and request the credential simultaneously.
+Add secrets
+SUPABASE_DB_PASSWORD
+@5*,2Wd?g~re.DK
+
+Port 6543 is reachable but the tenant was not found. Let me install pg and try the correct connection format, and also try the Supabase Management API.
+
+The direct DB host is IPv6-only (Replit doesn't support IPv6 sockets) and the pooler returns "tenant not found" for this project. I need the Supabase service role key to create server-side booking functions that bypass RLS securely — the right architecture for public write operations anyway.
+Add secrets
+SUPABASE_SERVICE_ROLE_KEY
+sb_secret_Aul3llboJehOXRihEqqrVQ_Rp4EDr5g
+Implementing server functions
+
+Let me verify the service role key works, then implement the fix in parallel.
+
+Service role key works — all three tables accept inserts. Now let me implement the fix in parallel: try the IPv6 direct postgres connection for DDL, create server-side booking functions, clean up test data, and write migration files simultaneously.
+
+Confirmed: anon cannot SELECT from bookings or guests (no SELECT policy). IPv6 direct connection is blocked in Replit. I'll now apply the fix using two parallel tracks: (1) try applying DDL via the Supabase pg_meta API with service role key, and (2) implement TanStack Start server functions for all booking writes/reads so the anon RLS issue is bypassed entirely.
+
+createServerFn is from @tanstack/react-start. Now I'll implement everything: server functions that use the service role key for all booking writes, plus the migration SQL. Let me do it all at once.
+
+Now update the payment route to use the server functions, and the confirmation page to use the server-side fetch:
+
+The client bundle is trying to load booking-server-fns.ts and failing at the top-level import. Let me check the exact error and the correct TanStack Start server function pattern.
+
+Let me check if createServerFn is properly exported from @tanstack/react-start, then restart the workflow for a clean build.
+
+createServerFn is correctly exported via export * from '@tanstack/start-client-core'. The HMR error is likely stale — let me restart for a clean build and check the result.
+
+Server is clean. Let me take a screenshot to verify the app is working, then do a quick TypeScript check to catch any issues before testing the booking flow end-to-end.
+
+Two issues to fix: .validator() is not in the type definitions for this version, and the confirmation page still references the old fetchBookingById. Let me check the actual builder API and fix both files.
+
+The method is inputValidator not validator, and the confirmation page still references the old function. Let me fix both at once.
+
+Now fix the confirmation page and check logs simultaneously:
+
+The issues are: (1) need inputValidator instead of no validator for typed data, (2) the FullBooking type shape doesn't match the select result. Let me check the type and fix everything at once.
+
+Now I have the full picture. The inputValidator method is the correct API, and the fetchBookingByIdFn needs to transform raw Supabase join data into the FullBooking shape. Let me fix everything at once:
+
+TypeScript is clean. Two issues remain:
+
+    The JSON-LD hydration mismatch (pre-existing, suppressHydrationWarning isn't deep enough)
+    "Invalid hook call" cascade from hydration
+
+Let me fix the hydration error properly — move the JSON-LD to client-only via useEffect, and then test the full booking flow.
+
+The JSON-LD <script> inside RootShell's <head> is being captured by TanStack Start's head serialization but not round-tripping correctly. The fix: inject it client-side only via useEffect, which avoids the SSR mismatch entirely.
+
+TypeScript clean, server running cleanly — no hydration errors in the fresh log. Let me take a screenshot and simultaneously test the server functions end-to-end via API call.
+
+App is clean — no hydration errors, beautiful homepage. Let me check the Supabase URL env var for the server functions and find the correct server-fn endpoint to test the full booking flow:
+
+App is clean. Let me verify the end-to-end booking flow by reading the payment route to confirm our changes are correct, then run the code review.
+
+The payment route looks correct — createGuestFn, createBookingFn, addBookingRoomFn all called with { data: ... } and the IDs generated client-side with crypto.randomUUID(). Let me run the code review now and simultaneously look at the full payment route to confirm the storeRef and navigate calls are intact.
+
+The code review is right on two points I need to fix: the migration has overly permissive anon SELECT (PII risk if applied), and the server functions don't validate room prices server-side (price forging possible). Let me fix both.
+
+I'll create a single combined atomic booking function that validates room prices server-side, and tighten the migration.
+
+Now let me fix both security issues in parallel — replace the three separate server functions with a single validated booking function that fetches room prices server-side, and tighten the migration to remove the risky open SELECT policies.

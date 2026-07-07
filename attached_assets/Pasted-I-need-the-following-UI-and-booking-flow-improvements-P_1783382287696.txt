@@ -1,0 +1,45 @@
+I need the following UI and booking flow improvements. Please apply them without changing unrelated features.
+
+1) Manage Booking phone input:
+- In the Manage Booking page, update the phone number input to match the booking flow phone input style.
+- Split it into two parts:
+  - A country code selector box on the left with all country calling codes.
+  - A phone number input field on the right.
+- Keep the same validation and behavior used in the booking flow phone input.
+
+2) Trips / Tours carousel:
+- Update the trips section layout.
+- On desktop:
+  - The carousel should be centered vertically in the section, not placed below the content.
+  - Keep the design balanced with the text/content.
+- On mobile:
+  - Move the carousel above the text/content.
+  - Keep it responsive and easy to swipe.
+
+3) Search dates → Booking flow:
+- When a guest selects check-in and check-out dates from the main search bar:
+  - Automatically carry these selected dates into the booking flow.
+  - The check-in and check-out fields in the booking flow should already be filled with the selected dates.
+- Do not require the guest to select the dates again.
+
+4) Selected room behavior in booking flow:
+- When a guest clicks "Book" on a specific room:
+  - Entering the booking flow should show only that selected room as selected.
+  - No other rooms should appear selected by default.
+  - Additional rooms can only become selected if the guest manually chooses them.
+- Fix any existing state persistence that causes previously selected rooms to remain selected.
+
+5) Extra services reset:
+- If the guest fills booking information and extra services, then starts another booking flow:
+  - Extra services/add-ons must be empty by default.
+  - The guest should select extras again manually.
+- Do not keep previous extra selections from an old booking session.
+
+Before editing:
+- Inspect the current state management and booking flow logic.
+- Identify where dates, selected rooms, and extras are stored.
+- Fix the root cause instead of adding temporary workarounds.
+
+Do not modify Supabase schema.
+Do not change the current availability logic.
+Do not redesign the whole UI.
