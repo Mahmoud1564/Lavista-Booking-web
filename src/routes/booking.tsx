@@ -10,7 +10,10 @@ export const Route = createFileRoute("/booking")({
   head: () => ({
     meta: [
       { title: "Book your stay — Lavista, Giza" },
-      { name: "description", content: "Reserve your room at Lavista near the Pyramids of Giza in a few simple steps." },
+      {
+        name: "description",
+        content: "Reserve your room at Lavista near the Pyramids of Giza in a few simple steps.",
+      },
       { name: "robots", content: "noindex,follow" },
     ],
     links: [{ rel: "canonical", href: "https://lavista-pyramids.lovable.app/booking" }],
@@ -46,7 +49,10 @@ function Shell() {
         <Link to="/" className="font-display text-xl tracking-tight text-sand-soft">
           Lavista<span className="text-gold">.</span>
         </Link>
-        <Link to="/" className="inline-flex items-center gap-2 text-sm text-sand-soft/80 transition hover:text-gold">
+        <Link
+          to="/"
+          className="inline-flex items-center gap-2 text-sm text-sand-soft/80 transition hover:text-gold"
+        >
           <ArrowLeft className="h-4 w-4" /> Back to site
         </Link>
       </nav>
@@ -54,7 +60,9 @@ function Shell() {
       {!isConfirmation && (
         <header className="mx-auto max-w-6xl px-6 pt-10">
           <p className="text-xs uppercase tracking-[0.3em] text-gold">Booking</p>
-          <h1 className="mt-3 font-display text-4xl text-sand-soft md:text-5xl">Reserve your stay</h1>
+          <h1 className="mt-3 font-display text-4xl text-sand-soft md:text-5xl">
+            Reserve your stay
+          </h1>
           <Stepper pathname={pathname} />
         </header>
       )}
@@ -74,7 +82,10 @@ function Shell() {
 }
 
 function Stepper({ pathname }: { pathname: string }) {
-  const currentIdx = Math.max(0, STEPS.findIndex((s) => pathname.startsWith(s.path)));
+  const currentIdx = Math.max(
+    0,
+    STEPS.findIndex((s) => pathname.startsWith(s.path)),
+  );
   return (
     <ol className="mt-6 flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.22em]">
       {STEPS.map((s, i) => {
@@ -82,10 +93,14 @@ function Stepper({ pathname }: { pathname: string }) {
         const done = i < currentIdx;
         return (
           <li key={s.path} className="flex items-center gap-3">
-            <span className={`flex h-7 w-7 items-center justify-center rounded-full border ${done ? "border-gold bg-gold text-ink" : active ? "border-gold text-gold" : "border-gold/20 text-muted-foreground"}`}>
+            <span
+              className={`flex h-7 w-7 items-center justify-center rounded-full border ${done ? "border-gold bg-gold text-ink" : active ? "border-gold text-gold" : "border-gold/20 text-muted-foreground"}`}
+            >
               {done ? <Check className="h-3.5 w-3.5" /> : i + 1}
             </span>
-            <span className={active || done ? "text-sand-soft" : "text-muted-foreground"}>{s.label}</span>
+            <span className={active || done ? "text-sand-soft" : "text-muted-foreground"}>
+              {s.label}
+            </span>
             {i < STEPS.length - 1 && <span className="h-px w-6 bg-gold/20" />}
           </li>
         );
@@ -145,7 +160,9 @@ function Summary() {
           <span className="text-xs font-medium uppercase tracking-[0.22em] text-gold">Total</span>
           <span className="font-display text-4xl text-sand-soft md:text-5xl">${total}</span>
         </div>
-        <p className="mt-2 text-[11px] text-muted-foreground">Taxes included · pay on arrival or by card</p>
+        <p className="mt-2 text-[11px] text-muted-foreground">
+          Taxes included · pay on arrival or by card
+        </p>
       </div>
     </aside>
   );

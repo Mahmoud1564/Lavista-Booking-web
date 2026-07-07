@@ -17,8 +17,7 @@ const FALLBACK_SUBTITLE =
 
 export function Hero({ onSearch }: { onSearch: () => void }) {
   const { checkIn, checkOut } = useBooking();
-  const nights =
-    checkIn && checkOut ? Math.max(0, differenceInCalendarDays(checkOut, checkIn)) : 0;
+  const nights = checkIn && checkOut ? Math.max(0, differenceInCalendarDays(checkOut, checkIn)) : 0;
 
   const { data: content } = useWebsiteContent();
   const heroData = (content?.hero as HeroData | undefined) ?? {};
@@ -29,13 +28,13 @@ export function Hero({ onSearch }: { onSearch: () => void }) {
   useEffect(() => {
     const channel = supabase
       .channel("hero-content-changes")
-      .on(
-        "postgres_changes",
-        { event: "*", schema: "public", table: "website_content" },
-        () => { queryClient.invalidateQueries({ queryKey: ["website_content"] }); },
-      )
+      .on("postgres_changes", { event: "*", schema: "public", table: "website_content" }, () => {
+        queryClient.invalidateQueries({ queryKey: ["website_content"] });
+      })
       .subscribe();
-    return () => { supabase.removeChannel(channel); };
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, [queryClient]);
 
   return (

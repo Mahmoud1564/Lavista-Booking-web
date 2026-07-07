@@ -9,7 +9,10 @@ export const Route = createFileRoute("/booking/confirmation/$ref")({
   head: ({ params }) => ({
     meta: [
       { title: `Booking ${params.ref} confirmed — Lavista` },
-      { name: "description", content: "Your stay at Lavista near the Pyramids of Giza is confirmed." },
+      {
+        name: "description",
+        content: "Your stay at Lavista near the Pyramids of Giza is confirmed.",
+      },
       { name: "robots", content: "noindex,follow" },
     ],
   }),
@@ -61,7 +64,8 @@ function fromRemote(ref: string, b: FullBooking): View {
   const co = new Date(b.check_out);
   const nights = Math.max(1, differenceInCalendarDays(co, ci));
   const rooms = b.rooms.map((r) => {
-    const price = r.price_per_night ?? Math.round(b.total_price / Math.max(1, b.rooms.length) / nights);
+    const price =
+      r.price_per_night ?? Math.round(b.total_price / Math.max(1, b.rooms.length) / nights);
     return {
       id: r.room_id,
       type: r.name,
@@ -181,7 +185,9 @@ function Confirmation() {
         </span>
         <div>
           <p className="text-xs uppercase tracking-[0.3em] text-gold">Booking confirmed</p>
-          <h1 className="font-display text-3xl text-sand-soft md:text-4xl">You're in. See you in Giza.</h1>
+          <h1 className="font-display text-3xl text-sand-soft md:text-4xl">
+            You're in. See you in Giza.
+          </h1>
         </div>
       </div>
 
@@ -200,7 +206,10 @@ function Confirmation() {
               <Detail label="Room" value={view.roomType} />
               <Detail label="Guests" value={String(view.guests)} />
               <Detail label="Check-in" value={format(new Date(view.checkIn), "EEE, MMM d, yyyy")} />
-              <Detail label="Check-out" value={format(new Date(view.checkOut), "EEE, MMM d, yyyy")} />
+              <Detail
+                label="Check-out"
+                value={format(new Date(view.checkOut), "EEE, MMM d, yyyy")}
+              />
               <Detail label="Nights" value={String(view.nights)} />
             </dl>
 
@@ -221,16 +230,20 @@ function Confirmation() {
               </ul>
 
               <div className="mt-5 flex items-baseline justify-between gap-3 rounded-xl border border-gold/30 bg-gold/10 p-4">
-                <span className="text-xs font-medium uppercase tracking-[0.22em] text-gold">Total</span>
-                <span className="font-display text-4xl text-sand-soft md:text-5xl">${view.total}</span>
+                <span className="text-xs font-medium uppercase tracking-[0.22em] text-gold">
+                  Total
+                </span>
+                <span className="font-display text-4xl text-sand-soft md:text-5xl">
+                  ${view.total}
+                </span>
               </div>
-              <p className="mt-2 text-[11px] text-muted-foreground">Taxes included · pay on arrival or by card</p>
+              <p className="mt-2 text-[11px] text-muted-foreground">
+                Taxes included · pay on arrival or by card
+              </p>
             </div>
           </>
         ) : (
-          <p className="mt-6 text-sm text-muted-foreground">
-            Loading booking details…
-          </p>
+          <p className="mt-6 text-sm text-muted-foreground">Loading booking details…</p>
         )}
 
         <p className="mt-6 flex items-center gap-2 text-sm text-sand-soft/85">
@@ -245,7 +258,10 @@ function Confirmation() {
           >
             <Download className="h-4 w-4" /> Download as PNG
           </button>
-          <Link to="/" className="inline-flex items-center gap-2 rounded-full border border-gold/30 px-5 py-3 text-xs uppercase tracking-[0.22em] text-sand-soft transition hover:bg-gold/10">
+          <Link
+            to="/"
+            className="inline-flex items-center gap-2 rounded-full border border-gold/30 px-5 py-3 text-xs uppercase tracking-[0.22em] text-sand-soft transition hover:bg-gold/10"
+          >
             <Home className="h-3.5 w-3.5" /> Back to home
           </Link>
           <a

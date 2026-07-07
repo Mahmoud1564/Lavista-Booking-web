@@ -55,15 +55,11 @@ export function findBooking(idOrName: string, emailOrPhone?: string) {
   const q2Digits = digits(q2);
   return all.find((b) => {
     const fullName = `${b.firstName} ${b.lastName}`.toLowerCase();
-    const idMatch =
-      b.ref.toLowerCase() === q1 ||
-      fullName === q1 ||
-      fullName.includes(q1);
+    const idMatch = b.ref.toLowerCase() === q1 || fullName === q1 || fullName.includes(q1);
     if (!idMatch) return false;
     if (!q2) return true;
     const emailMatch = b.email.toLowerCase() === q2;
-    const phoneMatch =
-      q2Digits.length > 0 && digits(b.phone) === q2Digits;
+    const phoneMatch = q2Digits.length > 0 && digits(b.phone) === q2Digits;
     return emailMatch || phoneMatch;
   });
 }

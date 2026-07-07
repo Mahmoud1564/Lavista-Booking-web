@@ -2,7 +2,15 @@ import { Link } from "@tanstack/react-router";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import type { ReactNode } from "react";
 
-export function StepCard({ title, subtitle, children }: { title: string; subtitle?: string; children: ReactNode }) {
+export function StepCard({
+  title,
+  subtitle,
+  children,
+}: {
+  title: string;
+  subtitle?: string;
+  children: ReactNode;
+}) {
   return (
     <div className="rounded-3xl border border-gold/15 bg-card/60 p-6 md:p-8">
       <h2 className="font-display text-2xl text-sand-soft">{title}</h2>
@@ -85,7 +93,10 @@ export function TextInput({
 }) {
   return (
     <div>
-      <FieldLabel>{label}{required && " *"}</FieldLabel>
+      <FieldLabel>
+        {label}
+        {required && " *"}
+      </FieldLabel>
       <input
         type={type}
         value={value}

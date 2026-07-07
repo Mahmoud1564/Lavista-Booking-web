@@ -6,7 +6,9 @@ import { CountryPhoneInput } from "@/components/lavista/CountryPhoneInput";
 import { COUNTRIES } from "@/data/countries";
 
 export const Route = createFileRoute("/booking/guest")({
-  head: () => ({ meta: [{ title: "Guest details — Lavista" }, { name: "robots", content: "noindex,follow" }] }),
+  head: () => ({
+    meta: [{ title: "Guest details — Lavista" }, { name: "robots", content: "noindex,follow" }],
+  }),
   component: GuestStep,
 });
 
@@ -35,14 +37,30 @@ function GuestStep() {
   };
 
   const emailOk = g.email.trim() === "" || /.+@.+\..+/.test(g.email);
-  const valid = g.firstName.trim() && g.lastName.trim() && emailOk && national.replace(/\D/g, "").length >= 6;
+  const valid =
+    g.firstName.trim() && g.lastName.trim() && emailOk && national.replace(/\D/g, "").length >= 6;
   return (
     <div>
       <StepCard title="Guest details" subtitle="Who should we have the room ready for?">
         <div className="grid gap-4 md:grid-cols-2">
-          <TextInput label="First name" value={g.firstName} onChange={(v) => setGuest({ firstName: v })} required />
-          <TextInput label="Last name" value={g.lastName} onChange={(v) => setGuest({ lastName: v })} required />
-          <TextInput label="Email (optional)" type="email" value={g.email} onChange={(v) => setGuest({ email: v })} />
+          <TextInput
+            label="First name"
+            value={g.firstName}
+            onChange={(v) => setGuest({ firstName: v })}
+            required
+          />
+          <TextInput
+            label="Last name"
+            value={g.lastName}
+            onChange={(v) => setGuest({ lastName: v })}
+            required
+          />
+          <TextInput
+            label="Email (optional)"
+            type="email"
+            value={g.email}
+            onChange={(v) => setGuest({ email: v })}
+          />
           <CountryPhoneInput
             label="Phone (WhatsApp)"
             required

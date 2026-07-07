@@ -41,7 +41,9 @@ function ExperienceDetail() {
       <div className="flex min-h-screen items-center justify-center bg-background px-4 text-center">
         <div>
           <h1 className="font-display text-4xl text-sand-soft">Experience not found</h1>
-          <Link to="/" className="mt-6 inline-block text-gold underline">Back home</Link>
+          <Link to="/" className="mt-6 inline-block text-gold underline">
+            Back home
+          </Link>
         </div>
       </div>
     );
@@ -62,12 +64,18 @@ function ExperienceDetail() {
       }
     : (fallbackExp as Experience);
 
-  const related = (dbList && dbList.length > 0
-    ? dbList.filter((e) => e.slug !== exp.slug).slice(0, 3).map((e) => ({
-        slug: e.slug, title: e.title, img: e.img, duration: e.duration,
-      }))
-    : FALLBACK.filter((e) => e.slug !== exp.slug).slice(0, 3));
-
+  const related =
+    dbList && dbList.length > 0
+      ? dbList
+          .filter((e) => e.slug !== exp.slug)
+          .slice(0, 3)
+          .map((e) => ({
+            slug: e.slug,
+            title: e.title,
+            img: e.img,
+            duration: e.duration,
+          }))
+      : FALLBACK.filter((e) => e.slug !== exp.slug).slice(0, 3);
 
   const waMsg = `https://wa.me/201007695392?text=${encodeURIComponent(
     `Hi Lavista — I'd like to book the ${exp.title} experience.`,
@@ -79,23 +87,36 @@ function ExperienceDetail() {
         <Link to="/" className="font-display text-xl tracking-tight text-sand-soft">
           Lavista<span className="text-gold">.</span>
         </Link>
-        <Link to="/" className="inline-flex items-center gap-2 text-sm text-sand-soft/80 transition hover:text-gold">
+        <Link
+          to="/"
+          className="inline-flex items-center gap-2 text-sm text-sand-soft/80 transition hover:text-gold"
+        >
           <ArrowLeft className="h-4 w-4" /> Back
         </Link>
       </nav>
 
       <section className="mx-auto grid max-w-7xl gap-10 px-6 py-12 lg:grid-cols-[1.3fr_1fr]">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
           <Carousel opts={{ align: "start", loop: exp.gallery.length > 1 }} className="w-full">
             <CarouselContent>
               {(exp.gallery.length > 0 ? exp.gallery : [exp.img]).map((src, i) => (
                 <CarouselItem key={i}>
                   <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-gold/10">
-                    <img src={src} alt={`${exp.title} — ${i + 1}`} className="h-full w-full object-cover" />
+                    <img
+                      src={src}
+                      alt={`${exp.title} — ${i + 1}`}
+                      className="h-full w-full object-cover"
+                    />
                     {i === 0 && (
                       <div className="absolute left-5 top-5 inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-ink/50 px-3 py-1 backdrop-blur-md">
                         <span className="h-1.5 w-1.5 rounded-full bg-gold" />
-                        <span className="text-[10px] uppercase tracking-[0.22em] text-sand-soft/90">{exp.tag}</span>
+                        <span className="text-[10px] uppercase tracking-[0.22em] text-sand-soft/90">
+                          {exp.tag}
+                        </span>
                       </div>
                     )}
                   </div>
@@ -111,8 +132,11 @@ function ExperienceDetail() {
           </Carousel>
         </motion.div>
 
-
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }}>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+        >
           <p className="text-xs uppercase tracking-[0.3em] text-gold">Experience · Giza, Egypt</p>
           <h1 className="mt-3 font-display text-4xl text-sand-soft md:text-5xl">{exp.title}</h1>
           <p className="mt-6 text-base leading-relaxed text-sand-soft/85">{exp.long}</p>
@@ -166,7 +190,11 @@ function ExperienceDetail() {
               className="group overflow-hidden rounded-3xl border border-gold/10 bg-card transition hover:border-gold/30"
             >
               <div className="aspect-[4/3] overflow-hidden">
-                <img src={r.img} alt={r.title} className="h-full w-full object-cover transition duration-700 group-hover:scale-105" />
+                <img
+                  src={r.img}
+                  alt={r.title}
+                  className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
+                />
               </div>
               <div className="flex items-center justify-between p-5">
                 <div>

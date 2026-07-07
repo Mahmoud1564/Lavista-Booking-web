@@ -43,10 +43,14 @@ const sharedCalendarClassNames = {
 } as const;
 
 const sharedModifiersClassNames = {
-  rangeStart: "bg-gold text-ink rounded-l-md [&_button]:bg-gold [&_button]:text-ink [&_button]:hover:bg-gold",
-  rangeEnd: "bg-gold text-ink rounded-r-md [&_button]:bg-gold [&_button]:text-ink [&_button]:hover:bg-gold",
-  rangeMiddle: "bg-gold/25 text-sand-soft rounded-none [&_button]:bg-transparent [&_button]:text-sand-soft [&_button]:hover:bg-gold/30",
-  selectedSingle: "bg-gold text-ink rounded-md [&_button]:bg-gold [&_button]:text-ink [&_button]:hover:bg-gold",
+  rangeStart:
+    "bg-gold text-ink rounded-l-md [&_button]:bg-gold [&_button]:text-ink [&_button]:hover:bg-gold",
+  rangeEnd:
+    "bg-gold text-ink rounded-r-md [&_button]:bg-gold [&_button]:text-ink [&_button]:hover:bg-gold",
+  rangeMiddle:
+    "bg-gold/25 text-sand-soft rounded-none [&_button]:bg-transparent [&_button]:text-sand-soft [&_button]:hover:bg-gold/30",
+  selectedSingle:
+    "bg-gold text-ink rounded-md [&_button]:bg-gold [&_button]:text-ink [&_button]:hover:bg-gold",
 } as const;
 
 export function BookingBar({ onSearch }: { onSearch?: () => void }) {
@@ -77,10 +81,7 @@ export function BookingBar({ onSearch }: { onSearch?: () => void }) {
   })();
 
   const NightsHeader = () => {
-    const n =
-      checkIn && checkOut
-        ? Math.max(0, Math.round((+checkOut - +checkIn) / 86400000))
-        : 0;
+    const n = checkIn && checkOut ? Math.max(0, Math.round((+checkOut - +checkIn) / 86400000)) : 0;
     return (
       <div className="flex items-center justify-between border-b border-gold/15 px-4 pb-3 pt-3 text-xs">
         <span className="uppercase tracking-[0.22em] text-gold">Your stay</span>
@@ -190,18 +191,26 @@ export function BookingBar({ onSearch }: { onSearch?: () => void }) {
                   disabled={atMin}
                   aria-label="Decrease guests"
                   className="flex h-8 w-8 items-center justify-center rounded-full border border-gold/30 text-gold transition hover:bg-gold/10 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-transparent"
-                >−</button>
-                <span className="w-5 text-center text-sand-soft" aria-live="polite">{guests}</span>
+                >
+                  −
+                </button>
+                <span className="w-5 text-center text-sand-soft" aria-live="polite">
+                  {guests}
+                </span>
                 <button
                   onClick={() => setGuests(Math.min(6, guests + 1))}
                   disabled={atMax}
                   aria-label="Increase guests"
                   className="flex h-8 w-8 items-center justify-center rounded-full border border-gold/30 text-gold transition hover:bg-gold/10 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-transparent"
-                >+</button>
+                >
+                  +
+                </button>
               </div>
             </div>
             {atMax && (
-              <p className="mt-3 text-[11px] text-muted-foreground">Maximum 6 guests per booking.</p>
+              <p className="mt-3 text-[11px] text-muted-foreground">
+                Maximum 6 guests per booking.
+              </p>
             )}
           </PopoverContent>
         </Popover>
