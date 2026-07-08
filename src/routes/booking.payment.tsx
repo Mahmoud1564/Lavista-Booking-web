@@ -56,6 +56,12 @@ function PaymentStep() {
     setSubmitting(true);
     setError(null);
 
+    // Track whether the booking record was successfully created in the DB.
+    // Once bookingId is set, all subsequent steps are non-critical: failures
+    // must not prevent navigation to the confirmation page.
+    let bookingId: string | null = null;
+    let ref: string | null = null;
+
     try {
       // Step 0: re-check availability before writing.
       const unavailable = await fetchUnavailableRoomIds(checkIn, checkOut);
@@ -66,7 +72,7 @@ function PaymentStep() {
         );
       }
 
-      // Step 1: create guest.
+      // Step 1: create guest record. Real failure here blocks the flow.
       const fullName = `${draft.guest.firstName} ${draft.guest.lastName}`.trim();
       const guestId = await createGuest({
         name: fullName,
@@ -74,7 +80,7 @@ function PaymentStep() {
         email: draft.guest.email || undefined,
       });
 
-      // Step 2: create pending booking.
+      // Step 2: create booking record. Real failure here blocks the flow.
       const notes = [
         draft.arrivalTime ? `Arrival: ${draft.arrivalTime}` : "",
         draft.specialRequests ? `Requests: ${draft.specialRequests}` : "",
@@ -83,7 +89,7 @@ function PaymentStep() {
         .filter(Boolean)
         .join(" · ");
 
-      const bookingId = await createBooking({
+      bookingId = await createBooking({
         guestId,
         checkIn,
         checkOut,
@@ -93,8 +99,12 @@ function PaymentStep() {
         primaryRoomId: rooms[0].id,
       });
 
-      // Step 3: insert booking_rooms for every selected room (non-critical).
-      // Failures here do not block the booking — guest + booking already exist.
+      // Booking confirmed in DB — generate the UI reference immediately so we
+      // can navigate even if subsequent steps encounter errors.
+      ref = generateRef();
+      storeRef(ref, bookingId);
+
+      // Step 3: insert booking_rooms (non-critical — guest + booking exist).
       for (const r of rooms) {
         try {
           await addBookingRoom(bookingId, r.id, r.price);
@@ -104,47 +114,57 @@ function PaymentStep() {
         }
       }
 
-      // Booking is created with status "upcoming"; no separate confirm step.
-
-
-      // UI-only reference + lookup cache.
-      const ref = generateRef();
-      storeRef(ref, bookingId);
-
-      const n = Math.max(1, nights);
-      saveBooking({
-        ref,
-        bookingId,
-        roomId: rooms[0].id,
-        roomType: rooms.map((r) => r.type).join(" + "),
-        checkIn: checkIn.toISOString(),
-        checkOut: checkOut.toISOString(),
-        nights,
-        guests,
-        total,
-        firstName: draft.guest.firstName,
-        lastName: draft.guest.lastName,
-        email: draft.guest.email,
-        phone: draft.guest.phone,
-        notes,
-        createdAt: new Date().toISOString(),
-        status: "confirmed",
-        rooms: rooms.map((r) => ({
-          id: r.id,
-          type: r.type,
-          price: r.price,
-          nights: n,
-          subtotal: r.price * n,
-        })),
-      });
+      // Step 4: persist to local cache (non-critical).
+      try {
+        const n = Math.max(1, nights);
+        saveBooking({
+          ref,
+          bookingId,
+          roomId: rooms[0].id,
+          roomType: rooms.map((r) => r.type).join(" + "),
+          checkIn: checkIn.toISOString(),
+          checkOut: checkOut.toISOString(),
+          nights,
+          guests,
+          total,
+          firstName: draft.guest.firstName,
+          lastName: draft.guest.lastName,
+          email: draft.guest.email,
+          phone: draft.guest.phone,
+          notes,
+          createdAt: new Date().toISOString(),
+          status: "confirmed",
+          rooms: rooms.map((r) => ({
+            id: r.id,
+            type: r.type,
+            price: r.price,
+            nights: n,
+            subtotal: r.price * n,
+          })),
+        });
+      } catch (cacheErr) {
+        // eslint-disable-next-line no-console
+        console.warn("[booking] local cache save failed (non-critical):", cacheErr);
+      }
 
       reset();
       setCheckIn(undefined);
       setCheckOut(undefined);
       navigate({ to: "/booking/confirmation/$ref", params: { ref } });
     } catch (e) {
-      // Surface the *complete* Supabase/Postgres error so the real cause is visible
-      // (code, message, details, hint) instead of a generic string.
+      // If bookingId was already set, the core booking exists in the DB.
+      // Navigate to confirmation instead of showing an error.
+      if (bookingId && ref) {
+        // eslint-disable-next-line no-console
+        console.warn("[booking] post-booking step failed, navigating to confirmation anyway:", e);
+        reset();
+        setCheckIn(undefined);
+        setCheckOut(undefined);
+        navigate({ to: "/booking/confirmation/$ref", params: { ref } });
+        return;
+      }
+
+      // Guest or booking creation genuinely failed — surface the error.
       let msg: string;
       if (e && typeof e === "object") {
         const err = e as { code?: string; message?: string; details?: string; hint?: string };
@@ -162,7 +182,7 @@ function PaymentStep() {
         msg = String(e);
       }
       // eslint-disable-next-line no-console
-      console.error("[booking] insert failed:", e);
+      console.error("[booking] booking creation failed:", e);
       setError(msg);
       setSubmitting(false);
     }

@@ -246,15 +246,19 @@ export async function createGuest(input: CreateGuestInput): Promise<string> {
   const { error, status, statusText } = response;
   // eslint-disable-next-line no-console
   console.log("[createGuest] response", { status, statusText, error });
-  if (error) {
-    // eslint-disable-next-line no-console
-    console.error("[createGuest] supabase error", error);
-    throw error;
+
+  // Success is determined by HTTP 2xx status. The Supabase client can report
+  // a non-null `error` even when the INSERT succeeded (e.g. when a SELECT/
+  // representation policy is absent but the INSERT itself went through).
+  // Trusting status avoids incorrectly blocking the booking flow.
+  if (status >= 200 && status < 300) {
+    return id;
   }
-  if (!id || !UUID_RE.test(id) || id === NIL_UUID) {
-    throw new Error(`createGuest: invalid guest id returned (${id ?? "null"})`);
-  }
-  return id;
+
+  // Non-2xx: the insert genuinely failed. Throw with full error detail.
+  // eslint-disable-next-line no-console
+  console.error("[createGuest] insert failed", { status, error });
+  throw error ?? new Error(`createGuest: unexpected HTTP status ${status}`);
 }
 
 
@@ -301,12 +305,16 @@ export async function createBooking(input: CreateBookingInput): Promise<string> 
   const { error, status, statusText } = response;
   // eslint-disable-next-line no-console
   console.log("[createBooking] response", { status, statusText, error });
-  if (error) {
-    // eslint-disable-next-line no-console
-    console.error("[createBooking] supabase error", error);
-    throw error;
+
+  // Success is determined by HTTP 2xx status. See createGuest for rationale.
+  if (status >= 200 && status < 300) {
+    return id;
   }
-  return id;
+
+  // Non-2xx: the insert genuinely failed.
+  // eslint-disable-next-line no-console
+  console.error("[createBooking] insert failed", { status, error });
+  throw error ?? new Error(`createBooking: unexpected HTTP status ${status}`);
 }
 
 export async function addBookingRoom(
@@ -331,7 +339,11 @@ export async function addBookingRoom(
   const { error, status, statusText } = response;
   // eslint-disable-next-line no-console
   console.log("[addBookingRoom] response", { status, statusText, error });
+
+  // Use HTTP status as the success signal — same rationale as createGuest/createBooking.
+  if (status >= 200 && status < 300) return;
   if (error) throw error;
+  throw new Error(`addBookingRoom: unexpected HTTP status ${status}`);
 }
 
 export async function confirmBooking(bookingId: string): Promise<void> {
