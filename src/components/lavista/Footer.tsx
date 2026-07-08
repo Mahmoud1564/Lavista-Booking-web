@@ -1,4 +1,4 @@
-import { Instagram, MessageCircle, Mail, MapPin } from "lucide-react";
+import { MessageCircle, Mail, MapPin } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 
 export function Footer() {
@@ -33,7 +33,6 @@ export function Footer() {
             <li><a href="#faq" className="transition hover:text-gold">FAQ</a></li>
             
             <li><Link to="/manage-booking" className="transition hover:text-gold">Manage booking</Link></li>
-            <li><a href="https://instagram.com" className="inline-flex items-center gap-1.5 transition hover:text-gold"><Instagram className="h-3.5 w-3.5" /> Instagram</a></li>
           </ul>
         </div>
       </div>
