@@ -26,7 +26,7 @@ function ExperienceCard({ e, index }: { e: ExpItem; index: number }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration: 0.6, delay: index * 0.06, ease: [0.2, 0.8, 0.2, 1] }}
-      className="group relative isolate flex aspect-square h-full w-full overflow-hidden rounded-3xl border border-white/5 bg-card shadow-[0_30px_60px_-30px_rgba(0,0,0,0.7)] transition-[border-color,box-shadow] duration-500 hover:border-gold/30 hover:shadow-[0_40px_80px_-30px_color-mix(in_oklab,var(--gold)_25%,transparent)]"
+      className="group relative isolate flex aspect-[4/5] h-full w-full overflow-hidden rounded-3xl border border-white/5 bg-card shadow-[0_30px_60px_-30px_rgba(0,0,0,0.7)] transition-[border-color,box-shadow] duration-500 hover:border-gold/30 hover:shadow-[0_40px_80px_-30px_color-mix(in_oklab,var(--gold)_25%,transparent)]"
     >
       <Link
         to="/experiences/$slug"
