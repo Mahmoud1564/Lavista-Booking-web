@@ -1,0 +1,63 @@
+The booking flow is failing with:
+
+```
+Booking failed.
+code: 42501
+message: new row violates row-level security policy for table "bookings"
+```
+
+Do NOT redesign the booking flow.
+Do NOT create server-side APIs or server functions.
+Do NOT add fake confirmation pages.
+Do NOT bypass the database.
+Do NOT modify the database schema.
+
+I already inspected the RLS policies on the `bookings` table. The required INSERT policies already exist.
+
+Your task is to identify the REAL root cause in the application code.
+
+Please perform a complete end-to-end investigation:
+
+1. Trace the booking flow from the Confirm Booking button until the Supabase `insert()` call.
+2. Log the exact payload sent to the `bookings` table immediately before the insert.
+3. Compare every field against the RLS policy requirements.
+4. Verify:
+
+   * guest_id
+   * room_id
+   * check_in
+   * check_out
+   * status
+   * total_price
+   * every other inserted field
+5. Verify the authenticated role and the anon role actually used by the client.
+6. Check whether the insert is writing to the correct table.
+7. Check whether any trigger or function modifies the inserted values before RLS validation.
+8. Check whether the booking insert happens before the guest creation finishes.
+9. Check whether `room_id`, `guest_id`, or `status` become null or different from the expected values.
+10. Verify that all required foreign keys exist before inserting the booking.
+11. Check whether any frontend transformation changes dates or values before sending them.
+
+Do not assume the RLS policy is wrong.
+
+Only after identifying the exact failing condition, implement the smallest possible fix in the application code.
+
+If, and only if, the failure is proven to be caused by the current RLS policy, explain exactly which policy condition fails and generate the minimum SQL required to fix that condition.
+
+Before making any changes, explain:
+
+* The exact root cause.
+* The exact field or condition causing the 42501 error.
+* Why it fails.
+* Why your fix is the smallest possible solution.
+
+The goal is:
+
+* Guest creation succeeds.
+* Booking insertion succeeds.
+* Booking is saved in Supabase.
+* Confirmation page opens normally.
+* Manage Booking continues working.
+* No server-side API.
+* No fake booking.
+* No unnecessary architectural changes.

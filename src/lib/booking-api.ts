@@ -290,7 +290,9 @@ export async function createBooking(input: CreateBookingInput): Promise<string> 
     check_in: toDateKey(input.checkIn),
     check_out: toDateKey(input.checkOut),
     num_guests: input.numGuests,
-    status: "confirmed",
+    // RLS WITH CHECK on bookings requires status = 'pending' for anon inserts.
+    // Admins confirm bookings separately; the frontend shows "confirmed" from localStorage.
+    status: "pending",
     total_price: input.totalPrice,
   };
   if (input.notes) payload.notes = input.notes;
