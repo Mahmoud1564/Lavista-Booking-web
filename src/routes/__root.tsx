@@ -8,6 +8,7 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
+import { Analytics } from "@vercel/analytics/react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
@@ -78,12 +79,20 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Lavista — Modern Stay near Giza Pyramids" },
-      { name: "description", content: "Lavista is a warm, modern hostel and boutique hotel a short walk from the Pyramids of Giza — cozy rooms, rooftop sunsets, and local Egyptian experiences." },
+      {
+        name: "description",
+        content:
+          "Lavista is a warm, modern hostel and boutique hotel a short walk from the Pyramids of Giza — cozy rooms, rooftop sunsets, and local Egyptian experiences.",
+      },
       { name: "author", content: "Lavista" },
       { name: "theme-color", content: "#0f0a05" },
       { httpEquiv: "content-language", content: "en" },
       { property: "og:title", content: "Lavista — Warm modern stay near the Pyramids" },
-      { property: "og:description", content: "Cozy rooms, rooftop sunsets, and local experiences a short walk from the Pyramids of Giza." },
+      {
+        property: "og:description",
+        content:
+          "Cozy rooms, rooftop sunsets, and local experiences a short walk from the Pyramids of Giza.",
+      },
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: "Lavista" },
       { property: "og:locale", content: "en_US" },
@@ -139,6 +148,7 @@ function RootShell({ children }: { children: ReactNode }) {
       <body>
         {children}
         <Scripts />
+        <Analytics />
       </body>
     </html>
   );
