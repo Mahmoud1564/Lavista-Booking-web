@@ -1,0 +1,82 @@
+Perform a complete mobile responsiveness and UX refinement pass across the entire website.
+
+Goal:
+Make the mobile experience feel polished, premium, and professionally designed while preserving the existing desktop design, branding, layout hierarchy, and functionality.
+
+Requirements:
+- Do NOT redesign the website.
+- Do NOT change the visual identity, colors, typography, sections, or desktop layout.
+- Only improve the mobile experience.
+
+Review every page and component, including:
+- Home
+- Rooms
+- Room Details
+- Booking flow
+- Experiences
+- About
+- Contact
+- Navbar
+- Footer
+- All dialogs, forms, cards, calendars, galleries, and reusable components.
+
+Fix all mobile issues, including but not limited to:
+
+• Buttons touching each other.
+• Buttons that are too small to tap comfortably.
+• Button text wrapping onto multiple lines when it should fit on one line.
+• Inconsistent spacing and padding.
+• Elements too close to screen edges.
+• Uneven margins.
+• Poor vertical rhythm.
+• Text overflowing or being clipped.
+• Images that don't scale correctly.
+• Cards that feel cramped.
+• Bad stacking order after responsive breakpoints.
+• Misaligned icons and text.
+• Inputs and selects that don't fit properly.
+• Tables or containers causing horizontal scrolling.
+• Components overflowing outside the viewport.
+• Headers that occupy excessive space.
+• Poor spacing between sections.
+• Awkward layouts on small screens.
+• Inconsistent responsive behavior across pages.
+
+Additionally, optimize the Room Details page for mobile:
+
+- Display the room amenities in a responsive two-column grid on mobile instead of a single vertical column to reduce excessive scrolling.
+- Maintain equal spacing, alignment, and consistent icon sizing.
+- If an amenity label is long, allow only that label to wrap without breaking the overall grid.
+- On very small devices (around 320px wide), gracefully fall back to a single column only if two columns would cause overflow or poor readability.
+- Keep the desktop amenities layout unchanged.
+
+Improve:
+- Touch targets (minimum comfortable tap size).
+- Responsive spacing.
+- Typography scaling.
+- Card layouts.
+- Button sizing.
+- Grid layouts.
+- Flex layouts.
+- Modal responsiveness.
+- Drawer responsiveness.
+- Form usability.
+- Image aspect ratios.
+- Overall visual balance.
+
+Requirements:
+- No horizontal scrolling anywhere.
+- No overlapping elements.
+- No clipped text.
+- No wrapped CTA button labels unless absolutely necessary.
+- Maintain excellent performance.
+- Preserve accessibility.
+- Keep desktop appearance unchanged.
+- Keep all existing functionality intact.
+
+Before finishing:
+- Test common mobile widths (320px, 360px, 375px, 390px, 412px, 430px, 480px, 768px).
+- Verify every page manually.
+- Fix every responsive issue found.
+- Ensure the final mobile experience feels native, clean, and premium without changing the website's overall design or structure.
+```
