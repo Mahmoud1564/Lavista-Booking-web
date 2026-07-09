@@ -154,7 +154,7 @@ function RootComponent() {
     // Public website only — never track presence on the admin dashboard.
     if (typeof window === "undefined") return;
     if (window.location.pathname.startsWith("/admin")) return;
-    startPresenceTracking();
+    return startPresenceTracking();
   }, []);
 
   return (

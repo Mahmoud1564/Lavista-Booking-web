@@ -1,6 +1,12 @@
 import { useEffect } from "react";
 import { useLocation } from "@tanstack/react-router";
-import { supabase } from "@/integrations/supabase/client";
+import { supabase as _typedSupabase } from "@/integrations/supabase/client";
+
+// The generated Database type has an empty schema, so the typed client
+// cannot express untyped tables like `page_views`. Same convention as
+// booking-api.ts.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const supabase: any = _typedSupabase;
 
 const SESSION_KEY = "lavista_session_id";
 
@@ -35,7 +41,7 @@ export function usePageView() {
         referrer: document.referrer || null,
         user_agent: navigator.userAgent,
       })
-      .then(({ error }) => {
+      .then(({ error }: { error: { message: string } | null }) => {
         if (error) console.warn("[page_view] insert failed", error.message);
       });
   }, [pathname]);

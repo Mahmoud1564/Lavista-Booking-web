@@ -1,53 +1,42 @@
-import { supabase } from "@/integrations/supabase/client";
+import { supabase as _typedSupabase } from "@/integrations/supabase/client";
 
-const SESSION_KEY = "lavista_session_id";
-const HEARTBEAT_INTERVAL_MS = 25_000;
+// The generated Database type has an empty schema, so the typed client
+// cannot express untyped tables like `online_visitors`. Same convention
+// as booking-api.ts.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const supabase: any = _typedSupabase;
 
-function getSessionId(): string {
-  try {
-    const existing = localStorage.getItem(SESSION_KEY);
-    if (existing) return existing;
-    const id = crypto.randomUUID();
-    localStorage.setItem(SESSION_KEY, id);
-    return id;
-  } catch {
-    return crypto.randomUUID();
+const KEY = "visitor_session_id";
+
+export function startPresenceTracking() {
+  let sid = localStorage.getItem(KEY);
+  if (!sid) {
+    sid = crypto.randomUUID();
+    localStorage.setItem(KEY, sid);
   }
-}
 
-async function sendHeartbeat(session_id: string) {
-  const { error } = await supabase
-    .from("online_visitors")
-    .upsert(
+  const beat = () =>
+    supabase.from("online_visitors").upsert(
       {
-        session_id,
+        session_id: sid,
+        current_path: window.location.pathname,
         user_agent: navigator.userAgent,
         last_seen: new Date().toISOString(),
       },
       { onConflict: "session_id" },
     );
 
-  if (error) console.warn("[presence] heartbeat failed", error.message);
-}
+  beat();
 
-let started = false;
+  const id = setInterval(beat, 25000);
 
-/**
- * Starts sending presence heartbeats to the `online_visitors` table every
- * 25 seconds so the site can report how many visitors are currently online.
- * Safe to call multiple times — only the first call takes effect.
- * No-op outside the browser (SSR).
- */
-export function startPresenceTracking(): void {
-  if (started) return;
-  if (typeof window === "undefined") return;
-  started = true;
+  const onVis = () =>
+    document.visibilityState === "visible" && beat();
 
-  const session_id = getSessionId();
+  document.addEventListener("visibilitychange", onVis);
 
-  // Fire immediately, then on a fixed interval.
-  void sendHeartbeat(session_id);
-  setInterval(() => {
-    void sendHeartbeat(session_id);
-  }, HEARTBEAT_INTERVAL_MS);
+  return () => {
+    clearInterval(id);
+    document.removeEventListener("visibilitychange", onVis);
+  };
 }
