@@ -12,6 +12,7 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { usePageView } from "../lib/use-page-view";
+import { startPresenceTracking } from "../lib/presence";
 
 function NotFoundComponent() {
   return (
@@ -148,6 +149,13 @@ function RootShell({ children }: { children: ReactNode }) {
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   usePageView();
+
+  useEffect(() => {
+    // Public website only — never track presence on the admin dashboard.
+    if (typeof window === "undefined") return;
+    if (window.location.pathname.startsWith("/admin")) return;
+    startPresenceTracking();
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
