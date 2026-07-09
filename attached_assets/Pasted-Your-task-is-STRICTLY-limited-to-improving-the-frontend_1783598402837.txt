@@ -1,0 +1,107 @@
+Your task is STRICTLY limited to improving the frontend UI/UX of the public website.
+
+⚠️ DO NOT touch anything related to:
+- Backend
+- Supabase
+- Database
+- SQL
+- RLS Policies
+- Authentication
+- APIs
+- Analytics
+- Presence Tracking
+- Booking Logic
+- Data Fetching
+- Business Logic
+- Environment Variables
+- Any functionality
+
+Do NOT refactor unrelated code.
+Do NOT change how anything works.
+Do NOT modify any existing logic.
+
+Your ONLY goal is to polish the mobile experience while keeping the desktop version visually identical.
+
+Perform a complete mobile responsiveness pass across the ENTIRE website.
+
+Review every page:
+
+- Home
+- Rooms
+- Room Details
+- Booking Flow
+- Experiences
+- About
+- Contact
+- Navbar
+- Footer
+- Every dialog
+- Every form
+- Every reusable component
+
+Fix every mobile UI issue you find, including:
+
+- Buttons that touch each other.
+- Buttons that are too small to tap comfortably.
+- Button labels wrapping onto multiple lines.
+- Inconsistent spacing.
+- Poor padding and margins.
+- Components too close to screen edges.
+- Uneven spacing between sections.
+- Cards that feel cramped.
+- Text overflowing or being clipped.
+- Images not scaling correctly.
+- Horizontal scrolling.
+- Components overflowing outside the viewport.
+- Bad responsive stacking.
+- Icons and text not aligned.
+- Forms that don't fit properly.
+- Calendar/dialog responsiveness.
+- Headers taking too much vertical space.
+- Poor mobile hierarchy.
+- Any layout that doesn't feel native on mobile.
+
+Improve:
+
+- Touch targets
+- Typography scaling
+- Responsive spacing
+- Card layouts
+- Grid layouts
+- Flex layouts
+- Image responsiveness
+- Button sizing
+- Overall visual balance
+
+Room Details page:
+
+- Display the room amenities in a responsive two-column grid on mobile instead of a single long column.
+- Reduce unnecessary scrolling.
+- Keep spacing clean and consistent.
+- Fall back to one column only on extremely narrow screens if needed.
+- Keep the desktop layout unchanged.
+
+Reviews Section:
+
+Improve the reviews carousel.
+
+Requirements:
+- Reviews should continuously auto-scroll from right to left.
+- When the last review reaches the end, the animation must continue seamlessly in an infinite loop with no visible jump or empty space.
+- Duplicate the review items if necessary to create a perfectly smooth marquee effect.
+- Keep the animation smooth and performant.
+- Pause the animation while the user is interacting with the reviews (hover on desktop or touch/drag if already supported).
+- Preserve the existing design and cards.
+
+Before finishing:
+
+- Test the website at 320px, 360px, 375px, 390px, 412px, 430px, 480px, and 768px widths.
+- Verify every page manually.
+- Fix every responsive issue found.
+- Ensure there is no horizontal scrolling anywhere.
+- Ensure no text is clipped.
+- Ensure no overlapping elements.
+- Keep desktop appearance unchanged.
+- Keep all existing functionality exactly as it is.
+
+Your changes should only improve the frontend presentation and mobile responsiveness without changing the website's behavior or architecture.

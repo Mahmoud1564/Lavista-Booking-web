@@ -173,3 +173,31 @@
   text-shadow: 0 0 32px color-mix(in oklab, var(--gold) 35%, transparent),
                0 2px 8px rgba(0,0,0,0.55);
 }
+
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@utility animate-marquee {
+  animation: marquee-scroll linear infinite;
+}
+
+@utility pause-on-interact {
+  &:hover {
+    animation-play-state: paused;
+  }
+  &:active {
+    animation-play-state: paused;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee {
+    animation: none;
+  }
+}
