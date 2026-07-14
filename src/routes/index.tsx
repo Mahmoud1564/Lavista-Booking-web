@@ -96,7 +96,7 @@ function Index() {
   };
 
   return (
-    <BookingProvider>
+    <BookingProvider persistDates>
       <main className="min-h-screen bg-background text-foreground">
         <Navbar />
         <Hero onSearch={onSearch} />
