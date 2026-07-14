@@ -159,11 +159,8 @@ export function Rooms({ trigger }: { trigger: number }) {
                         <div className="mt-auto flex items-center justify-between gap-3 pt-6">
                           <Link to="/rooms/$id" params={{ id: room.id }} className="text-sm text-sand-soft/80 transition hover:text-gold">View details</Link>
                           <Link
-                            to="/booking/guest"
-                            onClick={() => {
-                              preselectRoom(room.id);
-                              preselectDates(checkIn, checkOut);
-                            }}
+                            to="/rooms/$id"
+                            params={{ id: room.id }}
                             className="inline-flex items-center gap-1.5 rounded-full bg-gold px-4 py-2 text-xs font-medium text-ink transition hover:bg-gold-soft"
                           >
                             Book <ArrowRight className="h-3.5 w-3.5" />

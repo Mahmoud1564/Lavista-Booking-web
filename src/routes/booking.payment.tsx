@@ -216,14 +216,14 @@ function PaymentStep() {
           Free cancellation up to 24h before check-in. By confirming, you agree to Lavista's house rules.
         </p>
       </StepCard>
-      <div className="mt-8 flex justify-between">
+      <div className="mt-4 flex justify-between md:mt-8">
         <BackLink />
         <button
           onClick={confirm}
           disabled={!canConfirm || submitting}
-          className="inline-flex items-center gap-2 rounded-full bg-gold px-6 py-3 text-sm font-medium uppercase tracking-[0.18em] text-ink transition hover:bg-gold-soft disabled:cursor-not-allowed disabled:opacity-50"
+          className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full bg-gold px-4 py-2.5 text-xs font-medium uppercase tracking-[0.18em] text-ink transition hover:bg-gold-soft disabled:cursor-not-allowed disabled:opacity-50 md:gap-2 md:px-6 md:py-3 md:text-sm"
         >
-          <Check className="h-4 w-4" /> {submitting ? "Confirming…" : "Confirm booking"}
+          <Check className="h-3.5 w-3.5 md:h-4 md:w-4" /> {submitting ? "Confirming…" : "Confirm"}
         </button>
       </div>
     </div>
@@ -266,7 +266,7 @@ function BackLink() {
   return (
     <a
       href="/booking/extras"
-      className="inline-flex items-center gap-2 rounded-full border border-gold/30 px-5 py-3 text-xs uppercase tracking-[0.22em] text-sand-soft transition hover:bg-gold/10"
+      className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border border-gold/30 px-4 py-2.5 text-xs uppercase tracking-[0.22em] text-sand-soft transition hover:bg-gold/10 md:gap-2 md:px-5 md:py-3"
     >
       ← Back
     </a>

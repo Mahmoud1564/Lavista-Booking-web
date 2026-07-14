@@ -52,9 +52,9 @@ function Shell() {
       </nav>
 
       {!isConfirmation && (
-        <header className="mx-auto max-w-6xl px-6 pt-10">
+        <header className="mx-auto max-w-6xl px-4 pt-6 md:px-6 md:pt-10">
           <p className="text-xs uppercase tracking-[0.3em] text-gold">Booking</p>
-          <h1 className="mt-3 font-display text-4xl text-sand-soft md:text-5xl">Reserve your stay</h1>
+          <h1 className="mt-2 font-display text-3xl text-sand-soft md:mt-3 md:text-5xl">Reserve your stay</h1>
           <Stepper pathname={pathname} />
         </header>
       )}
@@ -62,7 +62,7 @@ function Shell() {
       {isConfirmation ? (
         <Outlet />
       ) : (
-        <section className="mx-auto grid max-w-6xl gap-10 px-6 py-12 lg:grid-cols-[1.4fr_1fr]">
+        <section className="mx-auto grid max-w-6xl gap-6 px-4 py-6 md:px-6 md:py-12 lg:gap-10 lg:grid-cols-[1.4fr_1fr]">
           <Outlet />
           <Summary />
         </section>
