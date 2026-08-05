@@ -9,28 +9,23 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
-import { Route as ManageBookingRouteImport } from './routes/manage-booking'
-import { Route as BookingRouteImport } from './routes/booking'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BookingRouteImport } from './routes/booking'
+import { Route as ManageBookingRouteImport } from './routes/manage-booking'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as BookingIndexRouteImport } from './routes/booking.index'
-import { Route as RoomsIdRouteImport } from './routes/rooms.$id'
-import { Route as ExperiencesSlugRouteImport } from './routes/experiences.$slug'
-import { Route as BookingRoomsRouteImport } from './routes/booking.rooms'
-import { Route as BookingPaymentRouteImport } from './routes/booking.payment'
-import { Route as BookingGuestRouteImport } from './routes/booking.guest'
-import { Route as BookingExtrasRouteImport } from './routes/booking.extras'
 import { Route as BookingDatesRouteImport } from './routes/booking.dates'
+import { Route as BookingExtrasRouteImport } from './routes/booking.extras'
+import { Route as BookingGuestRouteImport } from './routes/booking.guest'
+import { Route as BookingPaymentRouteImport } from './routes/booking.payment'
+import { Route as BookingRoomsRouteImport } from './routes/booking.rooms'
+import { Route as ExperiencesSlugRouteImport } from './routes/experiences.$slug'
+import { Route as RoomsIdRouteImport } from './routes/rooms.$id'
 import { Route as BookingConfirmationRefRouteImport } from './routes/booking.confirmation.$ref'
 
-const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
-  id: '/sitemap.xml',
-  path: '/sitemap.xml',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ManageBookingRoute = ManageBookingRouteImport.update({
-  id: '/manage-booking',
-  path: '/manage-booking',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BookingRoute = BookingRouteImport.update({
@@ -38,9 +33,14 @@ const BookingRoute = BookingRouteImport.update({
   path: '/booking',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const ManageBookingRoute = ManageBookingRouteImport.update({
+  id: '/manage-booking',
+  path: '/manage-booking',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BookingIndexRoute = BookingIndexRouteImport.update({
@@ -48,29 +48,9 @@ const BookingIndexRoute = BookingIndexRouteImport.update({
   path: '/',
   getParentRoute: () => BookingRoute,
 } as any)
-const RoomsIdRoute = RoomsIdRouteImport.update({
-  id: '/rooms/$id',
-  path: '/rooms/$id',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ExperiencesSlugRoute = ExperiencesSlugRouteImport.update({
-  id: '/experiences/$slug',
-  path: '/experiences/$slug',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BookingRoomsRoute = BookingRoomsRouteImport.update({
-  id: '/rooms',
-  path: '/rooms',
-  getParentRoute: () => BookingRoute,
-} as any)
-const BookingPaymentRoute = BookingPaymentRouteImport.update({
-  id: '/payment',
-  path: '/payment',
-  getParentRoute: () => BookingRoute,
-} as any)
-const BookingGuestRoute = BookingGuestRouteImport.update({
-  id: '/guest',
-  path: '/guest',
+const BookingDatesRoute = BookingDatesRouteImport.update({
+  id: '/dates',
+  path: '/dates',
   getParentRoute: () => BookingRoute,
 } as any)
 const BookingExtrasRoute = BookingExtrasRouteImport.update({
@@ -78,10 +58,30 @@ const BookingExtrasRoute = BookingExtrasRouteImport.update({
   path: '/extras',
   getParentRoute: () => BookingRoute,
 } as any)
-const BookingDatesRoute = BookingDatesRouteImport.update({
-  id: '/dates',
-  path: '/dates',
+const BookingGuestRoute = BookingGuestRouteImport.update({
+  id: '/guest',
+  path: '/guest',
   getParentRoute: () => BookingRoute,
+} as any)
+const BookingPaymentRoute = BookingPaymentRouteImport.update({
+  id: '/payment',
+  path: '/payment',
+  getParentRoute: () => BookingRoute,
+} as any)
+const BookingRoomsRoute = BookingRoomsRouteImport.update({
+  id: '/rooms',
+  path: '/rooms',
+  getParentRoute: () => BookingRoute,
+} as any)
+const ExperiencesSlugRoute = ExperiencesSlugRouteImport.update({
+  id: '/experiences/$slug',
+  path: '/experiences/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RoomsIdRoute = RoomsIdRouteImport.update({
+  id: '/rooms/$id',
+  path: '/rooms/$id',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const BookingConfirmationRefRoute = BookingConfirmationRefRouteImport.update({
   id: '/confirmation/$ref',
@@ -192,18 +192,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/sitemap.xml': {
-      id: '/sitemap.xml'
-      path: '/sitemap.xml'
-      fullPath: '/sitemap.xml'
-      preLoaderRoute: typeof SitemapDotxmlRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/manage-booking': {
-      id: '/manage-booking'
-      path: '/manage-booking'
-      fullPath: '/manage-booking'
-      preLoaderRoute: typeof ManageBookingRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/booking': {
@@ -213,11 +206,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BookingRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/manage-booking': {
+      id: '/manage-booking'
+      path: '/manage-booking'
+      fullPath: '/manage-booking'
+      preLoaderRoute: typeof ManageBookingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/booking/': {
@@ -227,39 +227,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BookingIndexRouteImport
       parentRoute: typeof BookingRoute
     }
-    '/rooms/$id': {
-      id: '/rooms/$id'
-      path: '/rooms/$id'
-      fullPath: '/rooms/$id'
-      preLoaderRoute: typeof RoomsIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/experiences/$slug': {
-      id: '/experiences/$slug'
-      path: '/experiences/$slug'
-      fullPath: '/experiences/$slug'
-      preLoaderRoute: typeof ExperiencesSlugRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/booking/rooms': {
-      id: '/booking/rooms'
-      path: '/rooms'
-      fullPath: '/booking/rooms'
-      preLoaderRoute: typeof BookingRoomsRouteImport
-      parentRoute: typeof BookingRoute
-    }
-    '/booking/payment': {
-      id: '/booking/payment'
-      path: '/payment'
-      fullPath: '/booking/payment'
-      preLoaderRoute: typeof BookingPaymentRouteImport
-      parentRoute: typeof BookingRoute
-    }
-    '/booking/guest': {
-      id: '/booking/guest'
-      path: '/guest'
-      fullPath: '/booking/guest'
-      preLoaderRoute: typeof BookingGuestRouteImport
+    '/booking/dates': {
+      id: '/booking/dates'
+      path: '/dates'
+      fullPath: '/booking/dates'
+      preLoaderRoute: typeof BookingDatesRouteImport
       parentRoute: typeof BookingRoute
     }
     '/booking/extras': {
@@ -269,12 +241,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BookingExtrasRouteImport
       parentRoute: typeof BookingRoute
     }
-    '/booking/dates': {
-      id: '/booking/dates'
-      path: '/dates'
-      fullPath: '/booking/dates'
-      preLoaderRoute: typeof BookingDatesRouteImport
+    '/booking/guest': {
+      id: '/booking/guest'
+      path: '/guest'
+      fullPath: '/booking/guest'
+      preLoaderRoute: typeof BookingGuestRouteImport
       parentRoute: typeof BookingRoute
+    }
+    '/booking/payment': {
+      id: '/booking/payment'
+      path: '/payment'
+      fullPath: '/booking/payment'
+      preLoaderRoute: typeof BookingPaymentRouteImport
+      parentRoute: typeof BookingRoute
+    }
+    '/booking/rooms': {
+      id: '/booking/rooms'
+      path: '/rooms'
+      fullPath: '/booking/rooms'
+      preLoaderRoute: typeof BookingRoomsRouteImport
+      parentRoute: typeof BookingRoute
+    }
+    '/experiences/$slug': {
+      id: '/experiences/$slug'
+      path: '/experiences/$slug'
+      fullPath: '/experiences/$slug'
+      preLoaderRoute: typeof ExperiencesSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/rooms/$id': {
+      id: '/rooms/$id'
+      path: '/rooms/$id'
+      fullPath: '/rooms/$id'
+      preLoaderRoute: typeof RoomsIdRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/booking/confirmation/$ref': {
       id: '/booking/confirmation/$ref'
