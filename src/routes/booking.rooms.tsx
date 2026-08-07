@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Plus, X, Check, Eye, AlertCircle } from "lucide-react";
+import { Plus, X, Check, Eye, AlertCircle, ChevronDown, ChevronUp } from "lucide-react";
 import { Link } from "@tanstack/react-router";
+import { useState } from "react";
 import { useBookingFlow } from "@/lib/booking-flow";
 import { StepCard, StepNav } from "@/components/lavista/booking-flow-ui";
 import { useBooking } from "@/components/lavista/booking-context";
@@ -16,6 +17,7 @@ function RoomsStep() {
   const { guests, checkIn, checkOut } = useBooking();
   const { data: rooms = [], isLoading } = useRooms();
   const { data: unavailable } = useUnavailableRooms(checkIn, checkOut);
+  const [showAllRooms, setShowAllRooms] = useState(false);
 
   const selected = draft.rooms
     .map((id) => rooms.find((r) => r.id === id))
@@ -71,13 +73,14 @@ function RoomsStep() {
           </div>
         ) : (
           <div className="grid gap-4">
-            {rooms.map((r) => {
+            {rooms.map((r, index) => {
               const selectedRoom = isSelected(r.id);
               const unavail = isUnavailable(r.id);
+              const hiddenOnMobile = index > 0 && !showAllRooms;
               return (
                 <div
                   key={r.id}
-                  className={`flex flex-col items-stretch gap-4 rounded-2xl border p-3 transition sm:flex-row sm:items-center ${
+                  className={`flex flex-col items-stretch gap-4 rounded-2xl border p-3 transition sm:flex-row sm:items-center ${hiddenOnMobile ? "hidden sm:flex" : ""} ${
                     selectedRoom
                       ? "border-gold bg-gold/5"
                       : unavail
@@ -120,7 +123,7 @@ function RoomsStep() {
                       <button
                         type="button"
                         onClick={() => removeById(r.id)}
-                        className="inline-flex items-center gap-1.5 rounded-full border border-gold/40 px-3 py-1.5 text-[11px] font-medium uppercase tracking-wider text-gold transition hover:bg-gold/10"
+                        className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border border-gold/40 px-3 py-1.5 text-[11px] font-medium uppercase tracking-wider text-gold transition hover:bg-gold/10"
                       >
                         <X className="h-3 w-3" /> Remove
                       </button>
@@ -129,7 +132,7 @@ function RoomsStep() {
                         type="button"
                         onClick={() => addRoom(r.id)}
                         disabled={unavail}
-                        className="inline-flex items-center gap-1.5 rounded-full bg-gold px-3 py-1.5 text-[11px] font-medium uppercase tracking-wider text-ink transition hover:bg-gold-soft disabled:cursor-not-allowed disabled:opacity-40"
+                        className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full bg-gold px-3 py-1.5 text-[11px] font-medium uppercase tracking-wider text-ink transition hover:bg-gold-soft disabled:cursor-not-allowed disabled:opacity-40"
                       >
                         <Plus className="h-3 w-3" /> {unavail ? "Booked" : "Add room"}
                       </button>
@@ -138,6 +141,19 @@ function RoomsStep() {
                 </div>
               );
             })}
+            {rooms.length > 1 && (
+              <button
+                type="button"
+                onClick={() => setShowAllRooms((v) => !v)}
+                className="sm:hidden flex items-center justify-center gap-2 rounded-2xl border border-gold/20 py-2.5 text-xs font-medium uppercase tracking-[0.18em] text-sand-soft/80 transition hover:border-gold/40 hover:text-gold"
+              >
+                {showAllRooms ? (
+                  <><ChevronUp className="h-3.5 w-3.5" /> Show less</>
+                ) : (
+                  <><ChevronDown className="h-3.5 w-3.5" /> Show more rooms (+{rooms.length - 1})</>
+                )}
+              </button>
+            )}
           </div>
         )}
       </StepCard>

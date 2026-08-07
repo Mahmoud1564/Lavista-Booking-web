@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
-import { consumePreselectedDates } from "@/lib/preselect-dates";
+import { consumePreselectedDates, preselectDates } from "@/lib/preselect-dates";
 
 type Ctx = {
   checkIn?: Date;
@@ -24,7 +24,13 @@ function load(): Stored {
   }
 }
 
-export function BookingProvider({ children }: { children: ReactNode }) {
+export function BookingProvider({
+  children,
+  persistDates = false,
+}: {
+  children: ReactNode;
+  persistDates?: boolean;
+}) {
   const [checkIn, setCheckIn] = useState<Date | undefined>();
   const [checkOut, setCheckOut] = useState<Date | undefined>();
   const [guests, setGuestsRaw] = useState(2);
@@ -33,20 +39,28 @@ export function BookingProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const s = load();
     if (s.guests) setGuestsRaw(Math.min(6, Math.max(1, s.guests)));
-    // Dates are intentionally not persisted across reloads. The only
-    // exception is a one-time bridge: if the guest picked dates in the
-    // main search bar and then clicked "Book", those dates are consumed
-    // here so the booking flow opens with them already filled in.
-    const preselected = consumePreselectedDates();
-    if (preselected.checkIn) setCheckIn(preselected.checkIn);
-    if (preselected.checkOut) setCheckOut(preselected.checkOut);
+    if (!persistDates) {
+      // Booking flow: consume the one-time bridge written by the search bar.
+      const preselected = consumePreselectedDates();
+      if (preselected.checkIn) setCheckIn(preselected.checkIn);
+      if (preselected.checkOut) setCheckOut(preselected.checkOut);
+    }
     setHydrated(true);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     if (!hydrated || typeof window === "undefined") return;
     window.localStorage.setItem(KEY, JSON.stringify({ guests }));
   }, [guests, hydrated]);
+
+  // Search-bar provider: keep lavista.searchDates in sync so the booking
+  // flow can pick them up automatically when it mounts, even without an
+  // explicit "Book" button click.
+  useEffect(() => {
+    if (!persistDates || !hydrated) return;
+    preselectDates(checkIn, checkOut);
+  }, [checkIn, checkOut, persistDates, hydrated]);
 
   const setGuests = (n: number) => setGuestsRaw(Math.min(6, Math.max(1, n)));
 

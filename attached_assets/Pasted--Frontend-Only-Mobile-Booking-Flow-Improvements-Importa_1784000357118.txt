@@ -1,0 +1,164 @@
+# Frontend Only – Mobile Booking Flow Improvements
+
+## Important Constraints
+
+**Frontend Only**
+
+Do **NOT** modify anything related to:
+
+* Backend
+* Supabase
+* Database
+* SQL
+* RLS
+* APIs
+* Authentication
+* Analytics
+* Presence Tracking
+* Booking Logic
+* Business Logic
+* Data Fetching
+* Environment Variables
+
+Do not change any functionality. Only improve the mobile UI/UX.
+
+---
+
+# 1. Change "Book" Button Destination
+
+On the public website (outside the Booking Flow):
+
+* Every **Book** button should navigate to the corresponding **Room Details** page instead of opening the Booking Flow.
+* The Room Details page should continue to have its own **Book Now** button that opens the Booking Flow as it currently does.
+* Do not modify any booking logic or navigation flow beyond this change.
+
+---
+
+# 2. Improve the Mobile Booking Flow
+
+These changes apply **only on mobile devices**.
+
+Keep the existing booking flow exactly as it is.
+
+Do **NOT**:
+
+* redesign the booking flow.
+* change the order of the steps.
+* change the booking process.
+* remove any step.
+* remove any button.
+* modify validation.
+* modify booking logic.
+
+Only improve the mobile user experience.
+
+---
+
+## Room Selection Step
+
+Currently, when multiple rooms are displayed, users have to scroll a long distance before reaching the Continue button.
+
+Improve this without changing the existing flow.
+
+* Show only the **first room in the current list** by default.
+* Do **NOT** change the room ordering.
+* Do **NOT** change room filtering.
+* Do **NOT** change availability logic.
+* Below the first room, add a compact **"Show More Rooms (+)"** control.
+* When tapped, smoothly expand and reveal the remaining rooms.
+* When tapped again, collapse them.
+* Keep the first room visible at all times.
+* Keep every room card exactly as it is.
+* Do not remove any room information.
+* Do not change room selection behavior.
+
+This is only a UI improvement to reduce scrolling on mobile.
+
+---
+
+## Navigation Buttons
+
+Throughout the booking flow on mobile:
+
+* Reduce unnecessary vertical spacing.
+* Make Continue and Back buttons easier to reach.
+* Reduce excessive scrolling wherever possible.
+* Improve spacing only.
+* Do not redesign any page.
+
+---
+
+## Buttons
+
+On mobile only:
+
+No button should ever wrap onto multiple lines.
+
+Every button label must remain on a single line.
+
+If needed:
+
+* slightly reduce font size,
+* slightly reduce horizontal padding,
+* improve responsive sizing,
+* or shorten the wording while keeping the same meaning.
+
+Examples include (but are not limited to):
+
+* Select This Room
+* View Room
+* Continue
+* Back
+* Book Now
+
+Apply this improvement consistently across the entire Booking Flow.
+
+---
+
+# 3. Additional Mobile UI Polish
+
+Carefully inspect the **entire mobile Booking Flow**.
+
+If you notice UI/UX issues such as:
+
+* excessive scrolling,
+* oversized empty spaces,
+* inconsistent spacing,
+* awkward layouts,
+* difficult-to-reach buttons,
+* text wrapping,
+* poor responsive behavior,
+* oversized cards,
+* alignment issues,
+* or anything else that negatively affects the mobile experience,
+
+improve them.
+
+However, you must strictly follow these rules:
+
+* Do NOT redesign the booking flow.
+* Do NOT change the flow structure.
+* Do NOT move major sections.
+* Do NOT change the order of any step.
+* Do NOT remove or add booking steps.
+* Do NOT remove any existing buttons.
+* Do NOT change functionality.
+* Do NOT change booking logic.
+* Do NOT modify backend code.
+* Do NOT modify Supabase.
+* Do NOT modify APIs.
+* Do NOT modify any data-related code.
+
+Your goal is to **polish** the existing mobile UI, **not** redesign it.
+
+The booking flow should feel cleaner, easier to use on small screens, and require less scrolling while remaining functionally identical.
+
+---
+
+# 4. Scope
+
+These changes apply **only to the mobile version**.
+
+Desktop must remain completely unchanged.
+
+No visual or functional changes should be made to desktop layouts.

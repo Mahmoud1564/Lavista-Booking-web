@@ -111,7 +111,7 @@ function Index() {
   };
 
   return (
-    <BookingProvider>
+    <BookingProvider persistDates>
       <main
         className="min-h-screen bg-background text-foreground"
         style={{ paddingBottom: "calc(4rem + env(safe-area-inset-bottom))" }}
