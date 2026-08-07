@@ -4,6 +4,8 @@ import { Star } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useReviewsContent } from "@/lib/use-content";
 
+const REVIEW_AVATAR_PLACEHOLDER = "/attached_assets/image_1786130358238.png";
+
 const FALLBACK_REVIEWS = [
   {
     name: "Lena",
@@ -39,7 +41,6 @@ function ReviewCard({
   className?: string;
 }) {
   const [avatarFailed, setAvatarFailed] = useState(false);
-  const hasAvatar = Boolean(r.avatar.trim());
 
   useEffect(() => {
     setAvatarFailed(false);
@@ -53,31 +54,13 @@ function ReviewCard({
       )}
     >
       <div className="flex items-center gap-3">
-        {hasAvatar && !avatarFailed ? (
-          <img
-            src={r.avatar}
-            alt={`${r.name} avatar`}
-            loading="lazy"
-            onError={() => setAvatarFailed(true)}
-            className="h-12 w-12 shrink-0 rounded-full border border-gold/30 object-cover"
-          />
-        ) : (
-          <div
-            role="img"
-            aria-label={`${r.name} avatar placeholder`}
-            className="flex h-12 w-12 shrink-0 items-end justify-center overflow-hidden rounded-full border border-gold/30 bg-transparent"
-          >
-            <svg
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-              className="h-10 w-10 text-[#96938c]"
-              fill="currentColor"
-            >
-              <circle cx="12" cy="7.5" r="3.5" />
-              <path d="M4.5 21c.45-4.25 3.2-6.75 7.5-6.75s7.05 2.5 7.5 6.75H4.5Z" />
-            </svg>
-          </div>
-        )}
+        <img
+          src={avatarFailed || !r.avatar.trim() ? REVIEW_AVATAR_PLACEHOLDER : r.avatar}
+          alt={`${r.name} avatar`}
+          loading="lazy"
+          onError={() => setAvatarFailed(true)}
+          className="h-12 w-12 shrink-0 rounded-full border border-gold/30 object-cover"
+        />
         <div className="min-w-0 flex-1">
           <p className="truncate text-sm text-sand-soft">{r.name}</p>
           <p className="truncate text-xs text-muted-foreground">{r.from}</p>
