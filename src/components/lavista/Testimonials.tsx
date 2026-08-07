@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Star } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useReviewsContent } from "@/lib/use-content";
+
+const REVIEW_AVATAR_PLACEHOLDER = "/attached_assets/image_1786130358238.png";
 
 const FALLBACK_REVIEWS = [
   {
@@ -38,6 +40,12 @@ function ReviewCard({
   r: { name: string; from: string; text: string; rating: number; avatar: string };
   className?: string;
 }) {
+  const [avatarFailed, setAvatarFailed] = useState(false);
+
+  useEffect(() => {
+    setAvatarFailed(false);
+  }, [r.avatar]);
+
   return (
     <div
       className={cn(
@@ -47,9 +55,10 @@ function ReviewCard({
     >
       <div className="flex items-center gap-3">
         <img
-          src={r.avatar}
+          src={avatarFailed || !r.avatar ? REVIEW_AVATAR_PLACEHOLDER : r.avatar}
           alt={`${r.name} avatar`}
           loading="lazy"
+          onError={() => setAvatarFailed(true)}
           className="h-12 w-12 shrink-0 rounded-full border border-gold/30 object-cover"
         />
         <div className="min-w-0 flex-1">

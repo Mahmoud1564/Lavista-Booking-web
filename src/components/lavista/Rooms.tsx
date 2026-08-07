@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Users, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { Users, ArrowRight, ArrowLeft } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { useBooking } from "./booking-context";
 import { preselectRoom } from "@/lib/preselect-room";
@@ -87,7 +87,7 @@ export function Rooms({ trigger }: { trigger: number }) {
                 aria-label="Previous rooms"
                 className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-gold/30 text-sand-soft transition hover:border-gold hover:text-gold disabled:cursor-not-allowed disabled:opacity-30"
               >
-                <ChevronLeft className="h-4 w-4" />
+                <ArrowLeft className="h-4 w-4" />
               </button>
               <button
                 type="button"
@@ -96,7 +96,7 @@ export function Rooms({ trigger }: { trigger: number }) {
                 aria-label="Next rooms"
                 className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-gold/30 text-sand-soft transition hover:border-gold hover:text-gold disabled:cursor-not-allowed disabled:opacity-30"
               >
-                <ChevronRight className="h-4 w-4" />
+                <ArrowRight className="h-4 w-4" />
               </button>
             </div>
           )}
@@ -185,7 +185,7 @@ export function Rooms({ trigger }: { trigger: number }) {
                   aria-label="Previous rooms"
                   className="absolute left-0 top-1/2 z-10 -translate-y-1/2 -translate-x-2 hidden md:inline-flex h-11 w-11 items-center justify-center rounded-full border border-gold/30 bg-ink/80 text-sand-soft backdrop-blur transition hover:border-gold hover:text-gold disabled:cursor-not-allowed disabled:opacity-30 lg:-translate-x-5"
                 >
-                  <ChevronLeft className="h-4 w-4" />
+                  <ArrowLeft className="h-4 w-4" />
                 </button>
                 <button
                   type="button"
@@ -194,7 +194,7 @@ export function Rooms({ trigger }: { trigger: number }) {
                   aria-label="Next rooms"
                   className="absolute right-0 top-1/2 z-10 -translate-y-1/2 translate-x-2 hidden md:inline-flex h-11 w-11 items-center justify-center rounded-full border border-gold/30 bg-ink/80 text-sand-soft backdrop-blur transition hover:border-gold hover:text-gold disabled:cursor-not-allowed disabled:opacity-30 lg:translate-x-5"
                 >
-                  <ChevronRight className="h-4 w-4" />
+                  <ArrowRight className="h-4 w-4" />
                 </button>
               </>
             )}

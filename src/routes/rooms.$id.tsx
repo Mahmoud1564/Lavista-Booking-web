@@ -15,7 +15,6 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel";
 
-
 const WA = "https://wa.me/201007695392";
 
 export const Route = createFileRoute("/rooms/$id")({
@@ -53,7 +52,6 @@ function RoomDetail() {
       api.off("select", onSel);
     };
   }, [api]);
-  
 
   if (isLoading) {
     return (
@@ -68,7 +66,9 @@ function RoomDetail() {
       <main className="flex min-h-screen items-center justify-center bg-background px-4 text-center">
         <div>
           <h1 className="font-display text-4xl text-sand-soft">Room not found</h1>
-          <Link to="/" className="mt-6 inline-block text-gold underline">Back home</Link>
+          <Link to="/" className="mt-6 inline-block text-gold underline">
+            Back home
+          </Link>
         </div>
       </main>
     );
@@ -83,29 +83,47 @@ function RoomDetail() {
           Lavista<span className="text-gold">.</span>
         </Link>
         {fromBooking ? (
-          <Link to="/booking/rooms" className="inline-flex items-center gap-2 text-sm text-sand-soft/80 transition hover:text-gold">
+          <Link
+            to="/booking/rooms"
+            className="inline-flex items-center gap-2 text-sm text-sand-soft/80 transition hover:text-gold"
+          >
             <ArrowLeft className="h-4 w-4" /> Back to booking
           </Link>
         ) : (
-          <Link to="/" className="inline-flex items-center gap-2 text-sm text-sand-soft/80 transition hover:text-gold">
+          <Link
+            to="/"
+            className="inline-flex items-center gap-2 text-sm text-sand-soft/80 transition hover:text-gold"
+          >
             <ArrowLeft className="h-4 w-4" /> Back
           </Link>
         )}
       </nav>
 
       <section className="mx-auto grid max-w-7xl gap-10 px-6 py-12 lg:grid-cols-[1.3fr_1fr]">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
           {(() => {
             const imgs = room.gallery.length > 0 ? room.gallery : [room.img];
             const total = imgs.length;
             return (
               <>
-                <Carousel setApi={setApi} opts={{ align: "start", loop: total > 1 }} className="w-full">
+                <Carousel
+                  setApi={setApi}
+                  opts={{ align: "start", loop: total > 1 }}
+                  className="w-full"
+                >
                   <CarouselContent>
                     {imgs.map((src, i) => (
                       <CarouselItem key={i}>
                         <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-gold/10">
-                          <img src={src} alt={`${room.type} — ${i + 1}`} className="h-full w-full object-cover" />
+                          <img
+                            src={src}
+                            alt={`${room.type} — ${i + 1}`}
+                            className="h-full w-full object-cover"
+                          />
                           <div className="pointer-events-none absolute right-3 top-3 rounded-full bg-ink/70 px-3 py-1 text-[11px] font-medium tracking-[0.15em] text-sand-soft backdrop-blur">
                             {i + 1} / {total}
                           </div>
@@ -153,9 +171,11 @@ function RoomDetail() {
           })()}
         </motion.div>
 
-
-
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }}>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+        >
           <p className="text-xs uppercase tracking-[0.3em] text-gold">Stay · Giza, Egypt</p>
           <h1 className="mt-3 font-display text-4xl text-sand-soft md:text-5xl">{room.type}</h1>
           <div className="mt-4 flex items-baseline gap-3">
@@ -183,12 +203,12 @@ function RoomDetail() {
             <p className="mt-2 text-sm text-sand-soft/85">{room.availability}</p>
           </div>
 
-          <div className="mt-8 flex flex-wrap gap-3">
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             {fromBooking ? (
               <Link
                 to="/booking/rooms"
                 onClick={() => preselectRoom(room.id)}
-                className="inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-gold px-6 py-4 text-sm font-medium uppercase tracking-[0.2em] text-ink transition hover:bg-gold-soft"
+                className="inline-flex flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-full bg-gold px-6 py-4 text-sm font-medium uppercase tracking-[0.2em] text-ink transition hover:bg-gold-soft"
               >
                 Select this room
               </Link>
@@ -196,7 +216,7 @@ function RoomDetail() {
               <Link
                 to="/booking/guest"
                 onClick={() => preselectRoom(room.id)}
-                className="inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-gold px-6 py-4 text-sm font-medium uppercase tracking-[0.2em] text-ink transition hover:bg-gold-soft"
+                className="inline-flex flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-full bg-gold px-6 py-4 text-sm font-medium uppercase tracking-[0.2em] text-ink transition hover:bg-gold-soft"
               >
                 Book Now
               </Link>
@@ -205,7 +225,7 @@ function RoomDetail() {
               href={WA}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center justify-center gap-2 rounded-full border border-gold/30 px-6 py-4 text-sm font-medium uppercase tracking-[0.2em] text-sand-soft transition hover:bg-gold/10"
+              className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full border border-gold/30 px-6 py-4 text-sm font-medium uppercase tracking-[0.2em] text-sand-soft transition hover:bg-gold/10"
             >
               <MessageCircle className="h-4 w-4" /> Contact
             </a>
@@ -217,7 +237,9 @@ function RoomDetail() {
         <section className="mx-auto max-w-7xl px-6 py-20">
           <div className="mb-10">
             <p className="text-xs uppercase tracking-[0.3em] text-gold">Other rooms</p>
-            <h2 className="mt-3 font-display text-3xl text-sand-soft md:text-4xl">Other rooms to rest in</h2>
+            <h2 className="mt-3 font-display text-3xl text-sand-soft md:text-4xl">
+              Other rooms to rest in
+            </h2>
           </div>
           <div className="grid gap-6 md:grid-cols-2">
             {related.map((r) => (
@@ -228,7 +250,11 @@ function RoomDetail() {
                 className="group overflow-hidden rounded-3xl border border-gold/10 bg-card transition hover:border-gold/30"
               >
                 <div className="aspect-[16/9] overflow-hidden">
-                  <img src={r.img} alt={r.type} className="h-full w-full object-cover transition duration-700 group-hover:scale-105" />
+                  <img
+                    src={r.img}
+                    alt={r.type}
+                    className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
+                  />
                 </div>
                 <div className="flex items-center justify-between p-5">
                   <div>

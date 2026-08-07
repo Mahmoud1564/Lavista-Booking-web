@@ -1,15 +1,18 @@
+import { useEffect, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { ArrowLeft, ArrowRight, Clock, CalendarDays, MapPin, MessageCircle } from "lucide-react";
 import { EXPERIENCES as FALLBACK, getExperience, type Experience } from "@/data/experiences";
 import { useExperiencesContent } from "@/lib/use-content";
 import { Footer } from "@/components/lavista/Footer";
+import { cn } from "@/lib/utils";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
+  type CarouselApi,
 } from "@/components/ui/carousel";
 
 export const Route = createFileRoute("/experiences/$slug")({
@@ -33,6 +36,20 @@ export const Route = createFileRoute("/experiences/$slug")({
 function ExperienceDetail() {
   const { slug } = Route.useParams();
   const { data: dbList } = useExperiencesContent();
+  const [api, setApi] = useState<CarouselApi>();
+  const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    if (!api) return;
+    setCurrent(api.selectedScrollSnap());
+    const onSelect = () => setCurrent(api.selectedScrollSnap());
+    api.on("select", onSelect);
+    api.on("reInit", onSelect);
+    return () => {
+      api.off("select", onSelect);
+      api.off("reInit", onSelect);
+    };
+  }, [api]);
 
   const dbExp = dbList?.find((e) => e.slug === slug);
   const fallbackExp = getExperience(slug);
@@ -41,7 +58,9 @@ function ExperienceDetail() {
       <div className="flex min-h-screen items-center justify-center bg-background px-4 text-center">
         <div>
           <h1 className="font-display text-4xl text-sand-soft">Experience not found</h1>
-          <Link to="/" className="mt-6 inline-block text-gold underline">Back home</Link>
+          <Link to="/" className="mt-6 inline-block text-gold underline">
+            Back home
+          </Link>
         </div>
       </div>
     );
@@ -61,13 +80,20 @@ function ExperienceDetail() {
         gallery: dbExp.gallery.length > 0 ? dbExp.gallery : (fallbackExp?.gallery ?? []),
       }
     : (fallbackExp as Experience);
+  const galleryImages = exp.gallery.length > 0 ? exp.gallery : [exp.img];
 
-  const related = (dbList && dbList.length > 0
-    ? dbList.filter((e) => e.slug !== exp.slug).slice(0, 3).map((e) => ({
-        slug: e.slug, title: e.title, img: e.img, duration: e.duration,
-      }))
-    : FALLBACK.filter((e) => e.slug !== exp.slug).slice(0, 3));
-
+  const related =
+    dbList && dbList.length > 0
+      ? dbList
+          .filter((e) => e.slug !== exp.slug)
+          .slice(0, 3)
+          .map((e) => ({
+            slug: e.slug,
+            title: e.title,
+            img: e.img,
+            duration: e.duration,
+          }))
+      : FALLBACK.filter((e) => e.slug !== exp.slug).slice(0, 3);
 
   const waMsg = `https://wa.me/201007695392?text=${encodeURIComponent(
     `Hi Lavista — I'd like to book the ${exp.title} experience.`,
@@ -79,40 +105,87 @@ function ExperienceDetail() {
         <Link to="/" className="font-display text-xl tracking-tight text-sand-soft">
           Lavista<span className="text-gold">.</span>
         </Link>
-        <Link to="/" className="inline-flex items-center gap-2 text-sm text-sand-soft/80 transition hover:text-gold">
+        <Link
+          to="/"
+          className="inline-flex items-center gap-2 text-sm text-sand-soft/80 transition hover:text-gold"
+        >
           <ArrowLeft className="h-4 w-4" /> Back
         </Link>
       </nav>
 
       <section className="mx-auto grid max-w-7xl gap-10 px-6 py-12 lg:grid-cols-[1.3fr_1fr]">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-          <Carousel opts={{ align: "start", loop: exp.gallery.length > 1 }} className="w-full">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <Carousel
+            setApi={setApi}
+            opts={{ align: "start", loop: galleryImages.length > 1 }}
+            className="w-full"
+          >
             <CarouselContent>
-              {(exp.gallery.length > 0 ? exp.gallery : [exp.img]).map((src, i) => (
+              {galleryImages.map((src, i) => (
                 <CarouselItem key={i}>
                   <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-gold/10">
-                    <img src={src} alt={`${exp.title} — ${i + 1}`} className="h-full w-full object-cover" />
+                    <img
+                      src={src}
+                      alt={`${exp.title} — ${i + 1}`}
+                      className="h-full w-full object-cover"
+                    />
                     {i === 0 && (
                       <div className="absolute left-5 top-5 inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-ink/50 px-3 py-1 backdrop-blur-md">
                         <span className="h-1.5 w-1.5 rounded-full bg-gold" />
-                        <span className="text-[10px] uppercase tracking-[0.22em] text-sand-soft/90">{exp.tag}</span>
+                        <span className="text-[10px] uppercase tracking-[0.22em] text-sand-soft/90">
+                          {exp.tag}
+                        </span>
+                      </div>
+                    )}
+                    {galleryImages.length > 1 && (
+                      <div className="absolute bottom-4 right-4 rounded-full border border-white/15 bg-ink/60 px-3 py-1 text-[11px] font-medium text-sand-soft backdrop-blur-md">
+                        {current + 1} / {galleryImages.length}
                       </div>
                     )}
                   </div>
                 </CarouselItem>
               ))}
             </CarouselContent>
-            {exp.gallery.length > 1 && (
+            {galleryImages.length > 1 && (
               <>
                 <CarouselPrevious className="left-3" />
                 <CarouselNext className="right-3" />
               </>
             )}
           </Carousel>
+
+          {galleryImages.length > 1 && (
+            <div className="mt-4 flex gap-2 overflow-x-auto pb-1">
+              {galleryImages.map((src, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  onClick={() => api?.scrollTo(i)}
+                  aria-label={`View image ${i + 1} of ${galleryImages.length}`}
+                  aria-current={current === i ? "true" : undefined}
+                  className={cn(
+                    "relative h-16 w-20 shrink-0 overflow-hidden rounded-xl border-2 transition sm:h-20 sm:w-24",
+                    current === i
+                      ? "border-gold opacity-100"
+                      : "border-transparent opacity-60 hover:opacity-90",
+                  )}
+                >
+                  <img src={src} alt="" className="h-full w-full object-cover" />
+                </button>
+              ))}
+            </div>
+          )}
         </motion.div>
 
-
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }}>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+        >
           <p className="text-xs uppercase tracking-[0.3em] text-gold">Experience · Giza, Egypt</p>
           <h1 className="mt-3 font-display text-4xl text-sand-soft md:text-5xl">{exp.title}</h1>
           <p className="mt-6 text-base leading-relaxed text-sand-soft/85">{exp.long}</p>
@@ -166,7 +239,11 @@ function ExperienceDetail() {
               className="group overflow-hidden rounded-3xl border border-gold/10 bg-card transition hover:border-gold/30"
             >
               <div className="aspect-[4/3] overflow-hidden">
-                <img src={r.img} alt={r.title} className="h-full w-full object-cover transition duration-700 group-hover:scale-105" />
+                <img
+                  src={r.img}
+                  alt={r.title}
+                  className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
+                />
               </div>
               <div className="flex items-center justify-between p-5">
                 <div>
