@@ -1,0 +1,165 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "name": "Lavista",
+  "description": "Extracted design tokens for the Lavista warm modern stay experience.",
+  "color": {
+    "background": {
+      "value": "oklch(0.14 0.012 60)",
+      "type": "color"
+    },
+    "foreground": {
+      "value": "oklch(0.96 0.018 80)",
+      "type": "color"
+    },
+    "card": {
+      "value": "oklch(0.18 0.014 60)",
+      "type": "color"
+    },
+    "popover": {
+      "value": "oklch(0.16 0.014 60)",
+      "type": "color"
+    },
+    "primary": {
+      "value": "oklch(0.82 0.11 78)",
+      "type": "color"
+    },
+    "primaryForeground": {
+      "value": "oklch(0.14 0.012 60)",
+      "type": "color"
+    },
+    "secondary": {
+      "value": "oklch(0.22 0.018 60)",
+      "type": "color"
+    },
+    "mutedForeground": {
+      "value": "oklch(0.72 0.03 75)",
+      "type": "color"
+    },
+    "border": {
+      "value": "oklch(1 0 0 / 10%)",
+      "type": "color"
+    },
+    "input": {
+      "value": "oklch(1 0 0 / 12%)",
+      "type": "color"
+    },
+    "ring": {
+      "value": "oklch(0.82 0.11 78)",
+      "type": "color"
+    },
+    "sand": {
+      "value": "oklch(0.78 0.06 75)",
+      "type": "color"
+    },
+    "sandSoft": {
+      "value": "oklch(0.88 0.04 80)",
+      "type": "color"
+    },
+    "gold": {
+      "value": "oklch(0.82 0.13 80)",
+      "type": "color"
+    },
+    "goldSoft": {
+      "value": "oklch(0.9 0.08 82)",
+      "type": "color"
+    },
+    "ink": {
+      "value": "oklch(0.1 0.01 60)",
+      "type": "color"
+    },
+    "destructive": {
+      "value": "oklch(0.6 0.22 25)",
+      "type": "color"
+    }
+  },
+  "fontFamily": {
+    "display": {
+      "value": "\"Fraunces\", Georgia, serif",
+      "type": "fontFamily"
+    },
+    "sans": {
+      "value": "\"Inter\", system-ui, sans-serif",
+      "type": "fontFamily"
+    }
+  },
+  "radius": {
+    "base": {
+      "value": "0.625rem",
+      "type": "dimension"
+    },
+    "sm": {
+      "value": "calc(var(--radius) - 4px)",
+      "type": "dimension"
+    },
+    "md": {
+      "value": "calc(var(--radius) - 2px)",
+      "type": "dimension"
+    },
+    "lg": {
+      "value": "var(--radius)",
+      "type": "dimension"
+    },
+    "xl": {
+      "value": "calc(var(--radius) + 4px)",
+      "type": "dimension"
+    },
+    "2xl": {
+      "value": "calc(var(--radius) + 8px)",
+      "type": "dimension"
+    },
+    "3xl": {
+      "value": "calc(var(--radius) + 12px)",
+      "type": "dimension"
+    },
+    "4xl": {
+      "value": "calc(var(--radius) + 16px)",
+      "type": "dimension"
+    },
+    "pill": {
+      "value": "9999px",
+      "type": "dimension"
+    }
+  },
+  "breakpoint": {
+    "sm": {
+      "value": "640px",
+      "type": "dimension"
+    },
+    "md": {
+      "value": "768px",
+      "type": "dimension"
+    },
+    "lg": {
+      "value": "1024px",
+      "type": "dimension"
+    }
+  },
+  "motion": {
+    "standardDuration": {
+      "value": "300ms",
+      "type": "duration"
+    },
+    "slowDuration": {
+      "value": "500ms",
+      "type": "duration"
+    },
+    "marquee": {
+      "value": "linear infinite",
+      "type": "cubicBezier"
+    }
+  },
+  "opacity": {
+    "borderSubtle": {
+      "value": "10%",
+      "type": "number"
+    },
+    "borderInteractive": {
+      "value": "30%",
+      "type": "number"
+    },
+    "surfaceGlass": {
+      "value": "55%",
+      "type": "number"
+    }
+  }
+}
