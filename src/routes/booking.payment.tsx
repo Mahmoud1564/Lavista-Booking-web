@@ -16,6 +16,7 @@ import {
   storeRef,
 } from "@/lib/booking-api";
 import { useQueryClient } from "@tanstack/react-query";
+import { sendNewBookingEmail } from "@/lib/booking-notification";
 
 export const Route = createFileRoute("/booking/payment")({
   head: () => ({ meta: [{ title: "Payment — Lavista" }, { name: "robots", content: "noindex,follow" }] }),
@@ -112,6 +113,14 @@ function PaymentStep() {
           // eslint-disable-next-line no-console
           console.warn("[booking] booking_rooms insert failed (non-critical):", roomErr);
         }
+      }
+
+      // The booking is persisted. Send the same details email as dashboard bookings;
+      // delivery failure must not undo the successful booking or confirmation page.
+      try {
+        await sendNewBookingEmail({ data: { bookingId } });
+      } catch (notificationError) {
+        console.error("[booking] public notification email failed:", notificationError);
       }
 
       // Step 4: persist to local cache (non-critical).
